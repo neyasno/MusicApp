@@ -22,7 +22,7 @@ const CategoryBrick = (props:ICategory)=>{
     )
 }
 
-export default function MainPageCategories() {
+export default function ContentCategories() {
 
   const categoriesData : ICategory[] = [
     {
@@ -33,7 +33,7 @@ export default function MainPageCategories() {
   ]
 
   return (
-    <div className='p-8 pl-6'>
+    <section className='p-8 pl-6'>
         <h1 className='text-2xl font-bold pl-3'>Все категории</h1>
         <ul>
             <div className='flex flex-wrap pt-5'>
@@ -44,6 +44,6 @@ export default function MainPageCategories() {
                 
             </div>
         </ul>
-    </div>
+    </section>
   )
 }

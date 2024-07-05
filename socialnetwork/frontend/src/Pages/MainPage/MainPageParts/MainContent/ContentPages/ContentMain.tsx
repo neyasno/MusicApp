@@ -1,7 +1,7 @@
-import { IItem } from "./MainContentComponents/Item";
-import ItemsContainer from "./MainContentComponents/ItemsContainer";
+import { IItem } from "../MainContentComponents/Item";
+import ItemsContainer from "../MainContentComponents/ItemsContainer";
 
-export default function MainPageMain() {
+export default function ContentMain() {
 
   const itemsData : IItem[] = [
     {
@@ -50,10 +50,10 @@ export default function MainPageMain() {
   ]
 
   return (
-    <main>
+    <section>
       <div className="flex flex-col p-2">
         <ItemsContainer title="Популярные исполнители" items={itemsData} ></ItemsContainer>
       </div>
-    </main>
+    </section>
   )
 }

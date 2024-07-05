@@ -1,20 +1,52 @@
-import { useContext } from 'react'
-import MainPageCategories from './MainPageCategories'
 import MainPageFooter from './MainPageFooter'
 import MainPageHeader from './MainPageHeader'
-import MainPageMain from './MainPageMain'
+import { EContent } from '../../MainPageTypes'
+import ContentMain from './ContentPages/ContentMain'
+import ContentCategories from './ContentPages/ContentCategories'
+import ContentSearch from './ContentPages/ContentSearch/ContentSearch'
+import ContentAuthor from './ContentPages/ContentAuthor'
+import ContentCard from './ContentPages/ContentCard'
 
-export default function MainPageContent() {
+export default function MainPageContent(props:{activeContent:EContent}) {
 
-  let actualContent = useContext();
+  const renderContent = () =>{
+
+    switch(props.activeContent){
+
+      case(EContent.MAIN):{
+         return <ContentMain></ContentMain>
+      }
+      case(EContent.AUTHOR):{
+        return <ContentAuthor></ContentAuthor>
+      }
+      case(EContent.CARD):{
+        return <ContentCard></ContentCard>
+      }
+      case(EContent.SEARCH_RESULTS):{
+        return <ContentSearch></ContentSearch>
+      }
+      case(EContent.CATEGORIES):{
+        return <ContentCategories></ContentCategories>
+      }
+      default:{
+        return <p>Error</p>
+      }
+
+    }
+
+  }
 
   return (
     <div className='w-full flex flex-col bg-main_black rounded-xl text-white my-2 mr-2'>
       <MainPageHeader></MainPageHeader>
       <div className="w-full flex flex-col rounded-xl overflow-y-scroll"> 
-        <MainPageCategories></MainPageCategories>   
-        <MainPageMain></MainPageMain>
+
+        <main>
+        {renderContent()}
+        </main>
+
         <MainPageFooter></MainPageFooter>
+
       </div>
     </div>
   )

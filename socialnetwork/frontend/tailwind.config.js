@@ -31,6 +31,9 @@ export default {
       },
       height:{
         34:"8.5rem"
+      },
+      spacing:{
+        '1/10': "10%"
       }
     },
   },

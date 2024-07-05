@@ -19,7 +19,8 @@ export default function ItemsContainer( props : IItemsContainer) {
         <ul>
             <div className="flex">
                 {props.items?.map((item , key)=>(
-                    <Item title={item.title} isRounded={false} description={item.description} image={item.image} link={item.link}></Item>
+                    <Item title={item.title} isRounded={false} description={item.description} image={item.image} link={item.link} 
+                        key={key}></Item>
                 ))}
             </div>
         </ul>
