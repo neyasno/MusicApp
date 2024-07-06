@@ -42,7 +42,7 @@ const SelectionComponentCategories = () =>{
 
 export default function MainPageSelection() {
   return (
-    <div className="flex flex-col p-6 bg-main_black text-white font-bold rounded-xl">
+    <div className="flex flex-col p-6 bg-main_black text-main_white font-bold rounded-xl">
       <SelectionHeader></SelectionHeader>
       <SelectionComponentMain></SelectionComponentMain>
       <SelectionComponentCategories></SelectionComponentCategories>

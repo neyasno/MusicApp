@@ -5,10 +5,10 @@ export default function SearchCategoryButton(props: { text: string, path: string
     const navigator = useNavigate();
     let { params, category } = useParams();
   
-    let buttonColor = "bg-neutral-800 hover:bg-neutral-700 text-white";
+    let buttonColor = "bg-main_l_black hover:bg-main_ll_black text-main_white";
   
     if (props.path == category) {
-      buttonColor = "bg-white text-black font-semibold";
+      buttonColor = "bg-main_white text-main_BLACK font-semibold";
     }
   
     return (

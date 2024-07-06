@@ -30,7 +30,7 @@ export default function LoginFormMain() {
 
   return (
     <div className='border-b-1 border-t-1 border-main_grey w-full flex justify-center'>
-        <div className='py-10 text-white'>
+        <div className='py-10 text-main_white'>
             <form action="post" >
                 <InputField title="Электронная почта или имя пользователя" 
                             value={email}

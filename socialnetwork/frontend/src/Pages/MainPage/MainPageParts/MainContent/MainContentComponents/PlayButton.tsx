@@ -5,7 +5,7 @@ export default function PlayButton() {
     <div className="size-14 bg-main_green rounded-full absolute bottom-1/10 right-1/10 
                     group-hover:translate-y-0 group-hover:opacity-100 transform 
                     translate-y-5 opacity-0 transition-all duration-150 ease-linear
-                    shadow-black shadow-2xl drop-shadow-xl hover:bg-green-500 ">
+                    shadow-main_black shadow-2xl drop-shadow-xl hover:bg-main_l_green ">
 
         <div className="flex p-3 pl-4">
             <svg width="29px" height="29px" viewBox="0 0 15 15" fill="none">

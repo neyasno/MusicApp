@@ -2,7 +2,7 @@
 const NavList = ( props : {elements: string[] , title:string }) =>{
   return(
     <div className="flex flex-col w-full pr-7">
-      <h5 className="font-bold text-white">{props.title}</h5>
+      <h5 className="font-bold text-main_white">{props.title}</h5>
       <ul>
         {
           props.elements.map((element , index)=>(

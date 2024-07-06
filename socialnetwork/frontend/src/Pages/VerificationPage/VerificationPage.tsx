@@ -18,7 +18,7 @@ const VerificationPage :React.FC<VerificationPageProps> = ({type}) =>{
         return <RegistrationForm></RegistrationForm>
       }
       case EVerificationType.RESET_PASSWORD:{
-        return <div className='text-black text-4xl'>Reset password page</div>
+        return <div className='text-main_BLACK text-4xl'>Reset password page</div>
       }
         
     }
@@ -26,7 +26,7 @@ const VerificationPage :React.FC<VerificationPageProps> = ({type}) =>{
   
 
   return (
-    <div className='w-full bg-gradient-to-b from-gray-800 to-black flex flex-col'>
+    <div className='w-full bg-gradient-to-b from-gray-800 to-main_BLACK flex flex-col'>
         <main className='w-full  flex justify-center items-center flex-1 min-h-screen'>
             <div className='bg-main_black rounded-lg flex flex-col w-6/12 my-10 items-center'>
               {renderForm()}
