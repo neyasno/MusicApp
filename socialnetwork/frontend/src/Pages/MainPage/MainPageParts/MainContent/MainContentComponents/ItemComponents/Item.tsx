@@ -1,4 +1,4 @@
-import PlayButton from "./PlayButton";
+import PlayButton from "../PlayButton";
 
 export interface IItem {
 

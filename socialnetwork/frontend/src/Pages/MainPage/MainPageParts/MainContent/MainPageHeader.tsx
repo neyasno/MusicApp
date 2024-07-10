@@ -32,7 +32,7 @@ const SearchField = () => {
 
 export default function MainPageHeader() {
   return (
-    <header className="bg-main_dd_black rounded-xl">
+    <header className="bg-main_dd_black rounded-t-xl">
       <nav>
         <div className="flex justify-between items-center">
 

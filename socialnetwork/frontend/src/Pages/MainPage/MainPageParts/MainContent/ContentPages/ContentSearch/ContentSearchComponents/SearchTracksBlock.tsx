@@ -1,5 +1,5 @@
 import PlayButton from '../../../MainContentComponents/PlayButton'
-import TracksContainer from '../../../MainContentComponents/TracksContainer'
+import TracksContainer from '../../../MainContentComponents/TrackComponents/TracksContainer'
 
 const BestResult = () =>{
     return(

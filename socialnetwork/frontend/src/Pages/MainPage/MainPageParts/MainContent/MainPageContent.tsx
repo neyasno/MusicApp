@@ -5,7 +5,7 @@ import ContentMain from './ContentPages/ContentMain'
 import ContentCategories from './ContentPages/ContentCategories'
 import ContentSearch from './ContentPages/ContentSearch/ContentSearch'
 import ContentAuthor from './ContentPages/ContentAuthor'
-import ContentCard from './ContentPages/ContentCard'
+import ContentCard from './ContentPages/ContentCard/ContentCard'
 
 export default function MainPageContent(props:{activeContent:EContent}) {
 
@@ -39,7 +39,7 @@ export default function MainPageContent(props:{activeContent:EContent}) {
   return (
     <div className='w-full flex flex-col bg-main_black rounded-xl text-main_white my-2 mr-2'>
       <MainPageHeader></MainPageHeader>
-      <div className="w-full flex flex-col rounded-xl overflow-y-scroll"> 
+      <div className="w-full flex flex-col rounded-b-xl overflow-y-scroll "> 
 
         <main>
         {renderContent()}

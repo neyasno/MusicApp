@@ -1,4 +1,3 @@
-import React from 'react'
 import TrackPortative from './TrackPortative'
 
 export default function TracksContainer() {

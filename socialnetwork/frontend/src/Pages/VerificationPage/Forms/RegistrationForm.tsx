@@ -3,6 +3,7 @@ import FormFooter from './FormElements/FormFooter'
 import RegistrationFormMain from './FormElements/RegistrationFormMain';
 
 export default function RegistrationForm( ) {
+  
   let header_text:string = "Зарегистрируйтесь в Spotify";
   let footer_text:string = "Есть аккаунт?";
   let link_text:string = "Вход в Spotify";

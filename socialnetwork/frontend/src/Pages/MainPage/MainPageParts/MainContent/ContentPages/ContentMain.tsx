@@ -1,5 +1,5 @@
-import { IItem } from "../MainContentComponents/Item";
-import ItemsContainer from "../MainContentComponents/ItemsContainer";
+import { IItem } from "../MainContentComponents/ItemComponents/Item";
+import ItemsContainer from "../MainContentComponents/ItemComponents/ItemsContainer";
 
 export default function ContentMain() {
 
