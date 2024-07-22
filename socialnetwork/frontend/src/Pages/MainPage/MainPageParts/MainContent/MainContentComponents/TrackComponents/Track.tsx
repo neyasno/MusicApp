@@ -18,7 +18,7 @@ export default function Track ( {id , name , author , time , link , author_link 
         <div className="flex">
           <div className="p-4 w-1/12 flex justify-center items-center relative mx-3">
             <p className=" text-lg group-hover:opacity-0">
-              {id}
+              { id }
             </p>
             <div className="absolute hidden group-hover:block">
               <svg fill="white" width="27px" height="27px" viewBox="-60 0 512 512" xmlns="http://www.w3.org/2000/svg" ><title>play</title><path d="M64 96L328 256 64 416 64 96Z" /></svg>
@@ -29,19 +29,19 @@ export default function Track ( {id , name , author , time , link , author_link 
           </div>
           <div className="flex flex-col justify-center pl-3">
             <Link to={link}>
-              <p className="text-main_white text-lg hover:underline">
-                {name}
+              <p className="text-main_WHITE text-lg hover:underline">
+                { name }
               </p>
             </Link>
             <Link to={author_link}>
               <p className="hover:underline">
-                {author}
+                { author }
               </p>
             </Link>
           </div>
         </div>
         <div className='pr-10'>
-            {time}
+            { time }
         </div>
       </div>
     </li>

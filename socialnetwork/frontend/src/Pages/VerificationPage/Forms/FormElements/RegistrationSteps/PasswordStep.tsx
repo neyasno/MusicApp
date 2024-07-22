@@ -66,7 +66,7 @@ export default function PasswordStep(props :{step : number , setStep : Function}
   return (
     <>
     <InputField title='Пароль' input_type='password' value={password} action={(action : React.ChangeEvent<HTMLInputElement>)=>{onPasswordChange(action)}}></InputField> 
-    <div className='flex py-5 items-center'>{passwordError  }</div>
+    <div className='flex py-5 items-center text-main_red'>{passwordError  }</div>
     <h4>Пароль должен содержать как минимум:</h4>
     <ul className='mb-5'>
         <PasswordRule rule={haveOneLetter} text='1 букву' ></PasswordRule>

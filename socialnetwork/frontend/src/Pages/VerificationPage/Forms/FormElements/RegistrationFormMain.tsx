@@ -29,7 +29,7 @@ export default function RegistrationFormMain() {
 
   return (
     <div className='border-b-1 border-t-1 border-gray-500 w-full flex justify-center'>
-        <div className='py-10 text-main_white'>
+        <div className='py-10 text-main_WHITE'>
         <form action="post" >
           {active_step}
         </form>

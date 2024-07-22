@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 export default function LoginFormMain() {
 
   const url = "http://localhost:8000/login/post"
+  const token_url = "http://localhost:8000/csrf"
 
   const [email , setEmail] = useState("");
   const [password , setPassword] = useState("");
@@ -24,13 +25,32 @@ export default function LoginFormMain() {
           email , 
           password
       }
-      axios.post(url ,userData).then((response) =>{ console.log(response)})
+      let token = "";
+      // axios.post(url ,userData).then((response) =>{ console.log(response.data)})
+      axios.get(token_url).then( (resp) => { console.log(resp.data['csrfToken']);token = resp.data['csrfToken'] }).then(
+        (resp2)=>{
+          
+          fetch(url , {
+            method:'POST',
+            headers:{
+              'Content-Type': 'application/json',
+              'X-CSRFToken': token ,
+            },
+            body: JSON.stringify({
+              userData
+            })
+          }).then((response) =>{ console.log(response)})
+
+        }
+      )
+      
+
       console.log("Otpravka login formi")
   }
 
   return (
     <div className='border-b-1 border-t-1 border-main_grey w-full flex justify-center'>
-        <div className='py-10 text-main_white'>
+        <div className='py-10 text-main_WHITE'>
             <form action="post" >
                 <InputField title="Электронная почта или имя пользователя" 
                             value={email}
@@ -47,18 +67,23 @@ export default function LoginFormMain() {
           
                 </InputField>
 
-                <div className="text-red-700">{submitError}</div>
-
+                <div className="text-main_red">{submitError}</div>
+                
                 <div className='flex py-3 items-center'>
                   <input className='size-5 bg-main_black border-1 border-main_grey outline-none checked:bg-red-500' type='checkbox'></input>
                   <p className='p-2'>Запомнить меня</p>
                 </div>
-                <SubmitButton func={onButtonClick}></SubmitButton>
+
+                <SubmitButton text="Войти" func={onButtonClick}></SubmitButton>
+
                 <div className='pt-6 w-full flex justify-center items-center'>
-                <Link className='underline'  to='/login/reset'>Забыли пароль ?</Link>
+                  <Link className='underline'  to='/login/reset'>Забыли пароль ?</Link>
                 </div>    
+
             </form>
         </div>
     </div>
   )
 }
+
+

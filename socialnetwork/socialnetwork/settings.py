@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'corsheaders' ,
     'main',
 ]
 
@@ -51,8 +52,11 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'socialnetwork.cors_middleware.CORSHeadersMiddleware'
+    'django.middleware.csrf.CsrfViewMiddleware' ,
+    'corsheaders.middleware.CorsMiddleware' ,
 ]
+
+CORS_ALLOWED_ORIGINS = ["http://localhost:5173"]
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR , 'frontend/dist')

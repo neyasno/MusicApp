@@ -10,18 +10,21 @@ export default {
     extend: {
       colors:{
         action_shadow: "rgba(0, 0, 0, 0.5);" ,
-        main_black: "#121212",
+
         main_green: "rgb(22 , 163 , 74)",
         main_l_green: "rgb(42 , 183 , 94)",
         main_grey: "rgb(107 ,114 ,128)" ,
         main_l_grey:"rgb(180 ,180 ,180)",
+        main_red:"rgb(185, 28 ,28)" ,
+        
         main_BLACK: "rgb(0,0,0)",
-        main_white: "rgb(255,255,255)" ,
+        main_WHITE: "rgb(255,255,255)" ,
+        
+        main_black: "rgb(18,18,18)",
         main_d_black:"rgb(25,25,25)" ,
         main_dd_black:"rgb(10,10,10)",
         main_l_black:"rgb(40,40,40)" ,
         main_ll_black:"rgb(55,55,55)" ,
-        
 
       },
       borderWidth:{

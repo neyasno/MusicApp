@@ -43,7 +43,7 @@ export default function EmailStep(props :{step : number , setStep : Function}) {
                     action={(action : React.ChangeEvent<HTMLInputElement>) =>{onEmailChange(action)}} >
         </InputField> 
         <div className='flex py-5 items-center text-red-600'>{emailError}</div>
-        <SubmitButton func={(action : React.FormEvent<HTMLInputElement>) =>{onEmailSubmit(action)}}>
+        <SubmitButton text='Далее' func={(action : React.FormEvent<HTMLInputElement>) =>{onEmailSubmit(action)}}>
         </SubmitButton>
     </>
   )

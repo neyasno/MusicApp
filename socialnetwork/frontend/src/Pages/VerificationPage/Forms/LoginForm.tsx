@@ -3,9 +3,9 @@ import FormFooter from './FormElements/FormFooter'
 import LoginFormMain from './FormElements/LoginFormMain';
 
 export default function LoginForm( ) {
-  let header_text:string = "Вход в Spotify";
+  let header_text:string = "Вход";
   let footer_text:string = "Нет аккаунта?";
-  let link_text:string = "Регистрация в Spotify";
+  let link_text:string = "Регистрация";
   let link:string = "/registration";
 
   return (

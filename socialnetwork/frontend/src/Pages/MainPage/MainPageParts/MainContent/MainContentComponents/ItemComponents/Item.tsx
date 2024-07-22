@@ -19,7 +19,7 @@ export default function Item( props:IItem ) {
                 <img className={props.isRounded?"rounded-full":"rounded-xl"} src={props.image} alt="" />
             </div>
             <div className="flex flex-col overflow-hidden max-w-">
-                <h3 className="font-bold text-main_white pt-3 pb-1 w-">
+                <h3 className="font-bold text-main_WHITE pt-3 pb-1 w-">
                     {props.title}                    
                 </h3>
                 <p className="text-main_l_grey">{props.description}</p>

@@ -37,7 +37,7 @@ export default function MainPageContent(props:{activeContent:EContent}) {
   }
 
   return (
-    <div className='w-full flex flex-col bg-main_black rounded-xl text-main_white my-2 mr-2'>
+    <div className='w-full flex flex-col bg-main_black rounded-xl text-main_WHITE my-2 mr-2'>
       <MainPageHeader></MainPageHeader>
       <div className="w-full flex flex-col rounded-b-xl overflow-y-scroll "> 
 
