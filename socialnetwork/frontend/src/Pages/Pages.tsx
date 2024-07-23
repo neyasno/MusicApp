@@ -6,7 +6,6 @@ import { EContent } from './MainPage/MainPageTypes'
 
 export default function Pages() {
   return (
-    <BrowserRouter>
       <Routes>
         <Route path='/' element={
           <MainPage activeContent={EContent.MAIN}></MainPage>
@@ -32,8 +31,9 @@ export default function Pages() {
         <Route path='/registration' element={
           <VerificationPage type={EVerificationType.REGISTRATION}></VerificationPage>
         } />
-
+        <Route path='/info' element={
+          <p>Information page</p>
+        } />
       </Routes>
-    </BrowserRouter>
   )
 }

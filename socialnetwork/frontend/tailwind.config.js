@@ -9,7 +9,7 @@ export default {
   theme: {
     extend: {
       colors:{
-        action_shadow: "rgba(0, 0, 0, 0.5);" ,
+        action_shadow: "rgba(0, 0, 0, 0.8);" ,
 
         main_green: "rgb(22 , 163 , 74)",
         main_l_green: "rgb(42 , 183 , 94)",
