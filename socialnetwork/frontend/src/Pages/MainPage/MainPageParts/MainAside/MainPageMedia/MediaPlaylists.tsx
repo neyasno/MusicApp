@@ -1,18 +1,52 @@
 import { useContext } from "react";
-import { ActionContext } from "../../../../../App";
+import { ActionContext, LoginStatusContext } from "../../../../../App";
+import MediaRecomendationBlock from "./UserMediaLibrary/RecomendationBlock";
+import Playlists from "./UserMediaLibrary/Playlists";
+import { ITrackPortative } from "../../MainContent/MainContentComponents/TrackComponents/TrackPortative";
 
-export default function MediaPlaylists({openPlaylistCreateWindow}:{openPlaylistCreateWindow:Function}) {
+export default function MediaPlaylists({func}:{func:Function}) {
+
+  const isLoggedIn  = useContext(LoginStatusContext)
     
-    const setActionVisability = useContext(ActionContext);
-    console.log(name)
+  const playlists: ITrackPortative[] = [
+    { 
+        title:"Мой плейлист",
+        img:"https://i.scdn.co/image/ab67616d00001e02ca7d1cfaf54216f536665f91" , 
+        link:"" ,
+        time : "1:20:42" ,
+    },
+    { 
+        title:"Мой плейлист",
+        img:"https://i.scdn.co/image/ab67616d00001e02ca7d1cfaf54216f536665f91" , 
+        link:"" ,
+        time : "1:20:42" ,
+    },
+    { 
+        title:"Мой плейлист",
+        img:"https://i.scdn.co/image/ab67616d00001e02ca7d1cfaf54216f536665f91" , 
+        link:"" ,
+        time : "1:20:42" ,
+    },
+    { 
+        title:"Мой плейлист",
+        img:"https://i.scdn.co/image/ab67616d00001e02ca7d1cfaf54216f536665f91" , 
+        link:"" ,
+        time : "1:20:42" ,
+    },
+]
+    const renderPlaylists = () => {
+      if(isLoggedIn){
+
+       //  Запрос плейлистов 
+       return <Playlists playlists={playlists}></Playlists> 
+       
+      }
+      else{
+        return <MediaRecomendationBlock func={func}></MediaRecomendationBlock>
+      }
+    }
   
     return(
-      <div className="bg-neutral-800 rounded-lg p-4 text-main_WHITE">
-            <h3 className="text-lg">Создай свой первый плейлист</h3>
-            <p className="mt-2">Это совссем не сложно! Мы поможем.</p>
-            <button className="bg-main_WHITE text-main_BLACK rounded-full py-2 px-4 mt-5 border-1 border-main_WHITE
-               hover:bg-main_l_black hover:text-main_WHITE hover:border-1 hover:border-main_WHITE"
-               onClick={(action)=>{ openPlaylistCreateWindow(action , setActionVisability) }}>Создать плейлист</button>
-      </div>
+      renderPlaylists()
     )
 }

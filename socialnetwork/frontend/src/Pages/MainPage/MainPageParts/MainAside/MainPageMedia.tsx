@@ -1,4 +1,4 @@
-import LanguageButton from "./MainPageMedia/LanguageButton";
+import MediaLanguage from "./MainPageMedia/MediaLanguage";
 import MediaHeader from "./MainPageMedia/MediaHeader"
 import MediaNavigation from "./MainPageMedia/MediaNavigation";
 import MediaPlaylists from "./MainPageMedia/MediaPlaylists"
@@ -7,10 +7,10 @@ import MediaPlaylists from "./MainPageMedia/MediaPlaylists"
 export default function MainPageMedia() {
   return (
     <div className="flex flex-col p-2 mt-2 rounded-lg bg-main_black text-main_l_grey font-bold h-full w-full">
-        <MediaHeader openPlaylistCreateWindow={openPlaylistCreateWindow}></MediaHeader>
-        <MediaPlaylists openPlaylistCreateWindow={openPlaylistCreateWindow}></MediaPlaylists>
+        <MediaHeader func={openPlaylistCreateWindow}></MediaHeader>
+        <MediaPlaylists func={openPlaylistCreateWindow}></MediaPlaylists>
         <MediaNavigation ></MediaNavigation>
-        <LanguageButton></LanguageButton>
+        <MediaLanguage></MediaLanguage>
     </div>
   )
 }

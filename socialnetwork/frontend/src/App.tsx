@@ -20,7 +20,7 @@ function App() {
       <BrowserRouter>
 
         <ActionContext.Provider value={setActionVisability}>
-        <LoginStatusContext.Provider value={{isLoggedIn , setLoggedIn}}>
+        <LoginStatusContext.Provider value={isLoggedIn }>
 
           <Pages></Pages>
 

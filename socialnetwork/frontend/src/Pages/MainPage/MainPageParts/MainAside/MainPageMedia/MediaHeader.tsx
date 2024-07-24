@@ -1,5 +1,10 @@
+import { useContext } from "react";
+import { ActionContext } from "../../../../../App";
 
-export default function MediaHeader({openPlaylistCreateWindow}:{openPlaylistCreateWindow:Function}) {
+export default function MediaHeader({func}:{func:Function}) {
+
+  const setActionVisability = useContext(ActionContext);
+
     return(
         <div className="flex justify-between p-4">
               <div className="flex items-center">
@@ -10,7 +15,7 @@ export default function MediaHeader({openPlaylistCreateWindow}:{openPlaylistCrea
                 </div>
                 <h3 className="pl-3">Моя медиатека</h3>
               </div>
-              <button onClick={(action)=>{openPlaylistCreateWindow(action)}}>
+              <button onClick={(action)=>{func(action , setActionVisability)}}>
                 <div className=" hover:bg-main_dd_black rounded-full font-light p-1">
                   <svg className="fill-main_l_grey" width="30" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 11h-6V5a1 1 0 0 0-2 0v6H5a1 1 0 0 0 0 2h6v6a1 1 0 0 0 2 0v-6h6a1 1 0 0 0 0-2"/></svg>
                 </div>
