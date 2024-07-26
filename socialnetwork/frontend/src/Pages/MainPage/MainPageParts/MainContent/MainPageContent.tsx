@@ -6,6 +6,7 @@ import ContentCategories from './ContentPages/ContentCategories'
 import ContentSearch from './ContentPages/ContentSearch/ContentSearch'
 import ContentAuthor from './ContentPages/ContentAuthor'
 import ContentCard from './ContentPages/ContentCard/ContentCard'
+import ContentCollection from './ContentPages/ContentCollection'
 
 export default function MainPageContent(props:{activeContent:EContent}) {
 
@@ -27,6 +28,9 @@ export default function MainPageContent(props:{activeContent:EContent}) {
       }
       case(EContent.CATEGORIES):{
         return <ContentCategories></ContentCategories>
+      }
+      case(EContent.COLLECTION):{
+        return <ContentCollection></ContentCollection>
       }
       default:{
         return <p>Error</p>

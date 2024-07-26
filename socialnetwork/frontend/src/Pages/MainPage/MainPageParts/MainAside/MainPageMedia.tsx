@@ -2,6 +2,7 @@ import MediaLanguage from "./MainPageMedia/MediaLanguage";
 import MediaHeader from "./MainPageMedia/MediaHeader"
 import MediaNavigation from "./MainPageMedia/MediaNavigation";
 import MediaPlaylists from "./MainPageMedia/MediaPlaylists"
+import { EActionPages } from "../../../ActionPageTypes";
 
 
 export default function MainPageMedia() {
@@ -15,10 +16,10 @@ export default function MainPageMedia() {
   )
 }
 
-const openPlaylistCreateWindow = ( action:React.MouseEvent<HTMLButtonElement, MouseEvent> , setActionVisability : Function) =>{
+const openPlaylistCreateWindow = ( action:React.MouseEvent<HTMLButtonElement, MouseEvent> , setAction : Function) =>{
   
   action.preventDefault();
-  setActionVisability(true);
+  setAction(EActionPages.CREATE_PLAYLIST);
 
 }
 

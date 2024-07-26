@@ -4,5 +4,6 @@ export enum EContent{
     MAIN = 'main' , 
     SEARCH_RESULTS = 'search_results' ,
     AUTHOR = 'author' , 
-    CARD = 'cart' , 
+    CARD = 'card' ,
+    COLLECTION = 'collection' ,  
 }

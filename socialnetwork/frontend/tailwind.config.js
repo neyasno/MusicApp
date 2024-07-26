@@ -41,6 +41,9 @@ export default {
       rotate:{
         26:"26deg"
       },
+      width:{
+        '1/7':"14.28571429%"
+      },
       height:{
         34:"8.5rem"
       },

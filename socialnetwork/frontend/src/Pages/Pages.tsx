@@ -10,18 +10,32 @@ export default function Pages() {
         <Route path='/' element={
           <MainPage activeContent={EContent.MAIN}></MainPage>
         } />
+
+
         <Route path='/categories' element={
           <MainPage activeContent={EContent.CATEGORIES}></MainPage>
         } />
+
+
         <Route path='/search/' element={
           <MainPage activeContent={EContent.SEARCH_RESULTS}></MainPage>
         } />
-        <Route path='/search/:params/:category' element={
+        <Route path='/search/:category' element={
           <MainPage activeContent={EContent.SEARCH_RESULTS}></MainPage>
         } />
+        <Route path='/search/:category/:params' element={
+          <MainPage activeContent={EContent.SEARCH_RESULTS}></MainPage>
+        } />
+
+
         <Route path='/section/:id' element={
           <MainPage activeContent={EContent.CARD}></MainPage>
         } />
+        <Route path='/section/collection/:id' element={
+          <MainPage activeContent={EContent.COLLECTION}></MainPage>
+        } />
+
+
         <Route path='/login' element={
           <VerificationPage type={EVerificationType.LOGIN}></VerificationPage>
         } />
@@ -31,9 +45,13 @@ export default function Pages() {
         <Route path='/registration' element={
           <VerificationPage type={EVerificationType.REGISTRATION}></VerificationPage>
         } />
+
+
         <Route path='/info' element={
           <p>Information page</p>
         } />
+
+        
       </Routes>
   )
 }
