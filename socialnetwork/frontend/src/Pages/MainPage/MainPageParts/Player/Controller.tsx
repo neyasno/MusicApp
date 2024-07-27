@@ -21,19 +21,41 @@ export default function Controller() {
 
     const updateTime = () =>{
         if(audio.current?.currentTime){
-            let clearedTime = Math.floor(audio.current?.currentTime);
-            console.log(clearedTime)
-            setCurrentTime( clearedTime )
+            setCurrentTime( Math.floor(audio.current?.currentTime) )
         }
     }
 
-    audio.current?.addEventListener('timeupdate' , updateTime);
+    const setTime = (timeElement : number | undefined ) =>{
+
+        if( timeElement ){
+            const secondsForAll = Math.floor( timeElement );
+            
+            const minutes = Math.floor(secondsForAll/60);
+            const seconds = Math.floor(secondsForAll%60);
+
+            let secondsString = seconds.toString();
+            let minutesString = minutes.toString();
+
+            if ( secondsString.length <=1 ){
+                secondsString = "0" + secondsString;
+            }
+
+            if ( minutesString.length <=1 ){
+                minutesString = "0" + minutesString;
+            }
+            
+            return minutesString + ":" + secondsString
+        }
+        return '00:00'
+    }
+
+    audio.current?.addEventListener('timeupdate' , updateTime );
 
     
   return (
     <div className='flex flex-col justify-center items-center w-full'>
 
-        <audio src="/111.mp3" ref={audio}> </audio>
+        <audio src="/222.mp3" ref={audio}> </audio>
 
         <div className='flex justify-center items-center py-2'>
             <button>
@@ -55,11 +77,22 @@ export default function Controller() {
         </div>
 
         <div className="flex w-1/2 pb-3 text-main_l_grey">
-            <p>{currentTime}</p>
+            <p>{setTime(currentTime)}</p>
 
-            <input type="range" className="w-full rounded-full mx-5 hover:bg-main_red"/>
+            <input type="range" className="w-full rounded-full mx-5  hover:bg-main_red" 
+                    value={currentTime}
+                    min={0}
+                    max={ audio.current?.duration ? Math.floor(audio.current?.duration) : 100}
+                    onChange={
+                        (action)=>{
+                            if(audio.current?.currentTime){
+                                audio.current.currentTime = Number.parseInt(action.currentTarget?.value)
+                            }
+                        }
+                    }     
+            />
 
-            <p>{audio.current?.duration ? Math.floor( audio.current?.duration ) : '00:00' }</p>
+            <p>{ setTime(audio.current?.duration)}</p>
         </div>
 
     </div>
