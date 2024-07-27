@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react"
 export default function Controller() {
 
     const [isPlaying ,setIsPlaying] = useState(false);
+    const [currentTime ,setCurrentTime] = useState(0);
 
     const audio = useRef<HTMLAudioElement | null>(null);
 
@@ -18,6 +19,17 @@ export default function Controller() {
         
     }
 
+    const updateTime = () =>{
+        if(audio.current?.currentTime){
+            let clearedTime = Math.floor(audio.current?.currentTime);
+            console.log(clearedTime)
+            setCurrentTime( clearedTime )
+        }
+    }
+
+    audio.current?.addEventListener('timeupdate' , updateTime);
+
+    
   return (
     <div className='flex flex-col justify-center items-center w-full'>
 
@@ -43,11 +55,11 @@ export default function Controller() {
         </div>
 
         <div className="flex w-1/2 pb-3 text-main_l_grey">
-            <p>{audio.current?.currentTime}</p>
+            <p>{currentTime}</p>
 
             <input type="range" className="w-full rounded-full mx-5 hover:bg-main_red"/>
 
-            <p>{audio.current?.duration?Math.floor( audio.current?.duration ):'00:00'}</p>
+            <p>{audio.current?.duration ? Math.floor( audio.current?.duration ) : '00:00' }</p>
         </div>
 
     </div>
