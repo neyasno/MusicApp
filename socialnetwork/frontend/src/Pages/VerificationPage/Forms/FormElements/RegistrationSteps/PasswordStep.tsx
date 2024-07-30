@@ -14,9 +14,14 @@ function PasswordRule(props :{text:string , rule : boolean}){
     )
 }
 
-export default function PasswordStep(props :{step : number , setStep : Function}) {
+interface IPasswordStep{ 
+    step : number , 
+    setStep : Function , 
+    password : string , 
+    setPassword : Function
+}
 
-    let [password , setPassword] = useState("");
+export default function PasswordStep({step , setStep , password , setPassword} : IPasswordStep) {
 
     let [haveOneLetter , setHaveOneLetter] = useState(false);
     let [haveOneNumberOrSimbol , setHaveOneNumberOrSimbol] = useState(false);
@@ -54,9 +59,8 @@ export default function PasswordStep(props :{step : number , setStep : Function}
 
     function onPasswordSubmit(action : React.MouseEvent<HTMLInputElement, MouseEvent>){
         action.preventDefault();
-        console.log(haveOneLetter && haveEnoughtSimbols && haveOneNumberOrSimbol)
         if(haveOneLetter && haveEnoughtSimbols && haveOneNumberOrSimbol){
-            props.setStep(props.step+1)
+            setStep(step+1)
         }
         else{
             setPasswordError("Не подходящий пароль")

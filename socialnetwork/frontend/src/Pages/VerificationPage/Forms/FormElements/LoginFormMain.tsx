@@ -7,8 +7,7 @@ import { Link } from "react-router-dom";
 
 export default function LoginFormMain() {
 
-  const url = "http://localhost:8000/login/post"
-  const token_url = "http://localhost:8000/csrf"
+
 
   const [email , setEmail] = useState("");
   const [password , setPassword] = useState("");
@@ -20,31 +19,17 @@ export default function LoginFormMain() {
   }
 
   const onButtonClick = (action : React.MouseEvent<Element , MouseEvent>) => {
+
+       const url = "http://localhost:8080/api/login"
+
       action.preventDefault();
       let userData = {
           email , 
           password
       }
-      let token = "";
-      // axios.post(url ,userData).then((response) =>{ console.log(response.data)})
-      axios.get(token_url).then( (resp) => { console.log(resp.data['csrfToken']);token = resp.data['csrfToken'] }).then(
-        (resp2)=>{
-          
-          fetch(url , {
-            method:'POST',
-            headers:{
-              'Content-Type': 'application/json',
-              'X-CSRFToken': token ,
-            },
-            body: JSON.stringify({
-              userData
-            })
-          }).then((response) =>{ console.log(response)})
 
-        }
-      )
+      axios.get(url).then( (resp) => { console.log(resp)})
       
-
       console.log("Otpravka login formi")
   }
 

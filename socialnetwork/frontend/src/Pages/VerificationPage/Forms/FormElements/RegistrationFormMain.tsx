@@ -6,20 +6,23 @@ import PersonStep from './RegistrationSteps/PersonStep'
 export default function RegistrationFormMain() {
 
   let [regStep , setRegStep] = useState(0);
+  let [email , setEmail] = useState("");
+  let [password , setPassword] = useState("");
+
   let active_step = <p>ERROR</p>
   
   switch (regStep) {
 
     case 0:{
-      active_step = <EmailStep step={regStep} setStep={setRegStep}></EmailStep>
+      active_step = <EmailStep step={regStep} setStep={setRegStep} email={email} setEmail={setEmail}></EmailStep>
       break;
     }
     case 1:{
-      active_step = <PasswordStep step={regStep} setStep={setRegStep}></PasswordStep>
+      active_step = <PasswordStep step={regStep} setStep={setRegStep} password={password} setPassword={setPassword}></PasswordStep>
       break;
     }
     case 2:{
-      active_step = <PersonStep></PersonStep>
+      active_step = <PersonStep email={email} password={password}></PersonStep>
       break;
     }
 

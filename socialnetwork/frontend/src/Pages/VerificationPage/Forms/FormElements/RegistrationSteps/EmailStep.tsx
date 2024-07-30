@@ -2,9 +2,15 @@ import React , {useState} from 'react'
 import InputField from '../../FormComponents/InputField';
 import SubmitButton from '../../FormComponents/SubmitButton';
 
-export default function EmailStep(props :{step : number , setStep : Function}) {
+interface IEmailStep{
+  step : number , 
+  setStep : Function , 
+  email : string , 
+  setEmail : Function
+}
 
-  let [email , setEmail] = useState("");
+export default function EmailStep({step , setStep , email , setEmail}:IEmailStep) {
+
   let [emailError , setEmailError] = useState("");
 
   const onEmailChange = (action : React.ChangeEvent<HTMLInputElement>)=>{
@@ -25,8 +31,7 @@ export default function EmailStep(props :{step : number , setStep : Function}) {
   const onEmailSubmit = (action : React.FormEvent<HTMLInputElement>) =>{
     action.preventDefault();
     if(isEmailValid(email)){
-        props.setStep(props.step + 1);
-        console.log(props.step)
+        setStep(step + 1);
     }
     else{
         setEmailError("Не верная почта")
