@@ -1,9 +1,13 @@
 import axios from 'axios';
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 
 export default function PersonStep( { email , password}:{email:string , password:string}) {
 
   const [username , setUsername] = useState('');
+  const [err , setError] = useState('');
+
+  const navigator = useNavigate()
 
   const onUsernameChange = (action : React.ChangeEvent<HTMLInputElement>) =>{
     setUsername(action.target.value)
@@ -22,7 +26,19 @@ export default function PersonStep( { email , password}:{email:string , password
 
     console.log(registrationResponse)
 
-    axios.post(url , registrationResponse ).then((res) => {console.log(res)})
+    axios.post(url , registrationResponse ).then((res) => {
+      
+      console.log(res)
+      if (res.data == "USER_CREATED"){
+        alert("Аккаунт успешно зарегистрирован")
+
+        navigator("/login")
+      }
+      else{
+        setError("Ошибка , пользователь c такой почтой , или ником уже существует")
+      }
+
+    })
   }
 
 
@@ -34,7 +50,7 @@ export default function PersonStep( { email , password}:{email:string , password
         onChange={(action)=>{onUsernameChange(action)}}
     >
     </input>  
-    <div className='flex py-5 items-center'></div>
+    <div className='flex py-5 items-center text-main_red'>{err}</div>
     <button className='bg-green-600 w-full rounded-full p-4 text-black font-bold'
     onClick={(action) =>{onRegistrationSubmit(action)}}
     > Далее

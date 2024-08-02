@@ -6,7 +6,7 @@ import { ITrackPortative } from "../../MainContent/MainContentComponents/TrackCo
 
 export default function MediaPlaylists({func}:{func:Function}) {
 
-  const isLoggedIn  = useContext(LoginStatusContext)
+  const loginContext = useContext(LoginStatusContext)
     
   const playlists: ITrackPortative[] = [
     { 
@@ -35,7 +35,7 @@ export default function MediaPlaylists({func}:{func:Function}) {
     },
 ]
     const renderPlaylists = () => {
-      if(isLoggedIn){
+      if(loginContext?.isLoggedIn){
 
        //  Запрос плейлистов 
        return <Playlists playlists={playlists}></Playlists> 

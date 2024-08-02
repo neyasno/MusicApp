@@ -1,17 +1,20 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import InputField from "../FormComponents/InputField";
 import SubmitButton from "../FormComponents/SubmitButton";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { LoginStatusContext } from "../../../../App";
 
 
 export default function LoginFormMain() {
 
-
-
   const [email , setEmail] = useState("");
   const [password , setPassword] = useState("");
   const [submitError , setError] = useState("");
+
+  const loginContext = useContext(LoginStatusContext);
+
+  const navigator = useNavigate()
 
   const onFieldChange = (action: React.ChangeEvent<HTMLInputElement> , func:Function) => {
     action.preventDefault();
@@ -20,17 +23,33 @@ export default function LoginFormMain() {
 
   const onButtonClick = (action : React.MouseEvent<Element , MouseEvent>) => {
 
-       const url = "http://localhost:8080/api/login"
+    action.preventDefault();
 
-      action.preventDefault();
-      let userData = {
-          email , 
-          password
+    const url = "http://localhost:8080/api/login"
+
+    axios.get(url , {
+      params:{
+        email , 
+        password
       }
+    }).then( (resp) => { 
+      console.log(resp)
+      if(resp.data == "USER_LOGIN"){
 
-      axios.get(url).then( (resp) => { console.log(resp)})
-      
-      console.log("Otpravka login formi")
+          loginContext?.setLoggedIn(true)
+          navigator("/")
+          
+      }
+      else if (resp.data == "USER_NOT_EXIST"){
+        setError("Аккаунт не существует")
+      }
+      else if (resp.data == "USER_PASSWORD_FALSE"){
+        setError("Данные для входа не верны")
+      }
+      else{
+        setError("Ошибка")
+      }
+    })
   }
 
   return (

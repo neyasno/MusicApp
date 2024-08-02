@@ -1,13 +1,17 @@
-import { createContext, useContext, useState } from 'react'
+import { createContext, useState } from 'react'
 import ActionPages from './Pages/ActionPages'
 import Pages from './Pages/Pages'
 import { BrowserRouter } from 'react-router-dom';
 import { EActionPages } from './Pages/ActionPageTypes';
-import Player from './Pages/MainPage/MainPageParts/Player/Player';
+
+type LoginStatusContextType = {
+  isLoggedIn: boolean;
+  setLoggedIn: Function;
+};
 
 export const ActionContext = createContext({});
 export const PlayerContext = createContext({});
-export const LoginStatusContext = createContext({});
+export const LoginStatusContext = createContext<LoginStatusContextType | undefined>(undefined);
 
 function App() {
 
@@ -20,7 +24,7 @@ function App() {
       <BrowserRouter>
 
         <ActionContext.Provider value={setAction}>
-        <LoginStatusContext.Provider value={isLoggedIn }>
+        <LoginStatusContext.Provider value={{isLoggedIn , setLoggedIn}}>
 
           <Pages></Pages>
 
