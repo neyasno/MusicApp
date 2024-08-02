@@ -18,10 +18,12 @@ func LoginHandler(users database.Users)  http.HandlerFunc {
 			Password: params.Get("password") ,
 		}
 
-		result := users.LoginUser(user)
+		result , token := users.LoginUser(user)
 
-		log.Print(result)
-		writer.Write([]byte(result))
+		json.NewEncoder(writer).Encode(map[string]string{
+			"code": result ,
+			"token" : token, 
+		})
 	}
 
 }

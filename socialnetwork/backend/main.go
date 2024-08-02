@@ -18,8 +18,8 @@ func main() {
 	users := db.Users()
 	
 
-	http.HandleFunc("/api/login", middleware.CorsMiddleware(LoginHandler(users)))
-	http.HandleFunc("/api/registration", middleware.CorsMiddleware(RegistrationHandler(users)))
+	http.HandleFunc("/api/login", middleware.WithMiddleware(LoginHandler(users)))
+	http.HandleFunc("/api/registration", middleware.WithMiddleware(RegistrationHandler(users)))
 
 	fmt.Println("Starting server at port 8080")
 	log.Fatal(http.ListenAndServe(":8080", nil))

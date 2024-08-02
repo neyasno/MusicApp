@@ -1,8 +1,10 @@
 package database
 
 import (
+	"backend/security"
 	"context"
 	"log"
+	"time"
 
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
@@ -29,9 +31,10 @@ func (db Database) Users() Users {
 
 func (users Users) RegisterUser(user UserData) string{
 
-	isUserExist :=  users.Contains("email" , user.Email) || users.Contains("username" , user.Username)
+	isUserEmailExist , _ :=  users.Contains("email" , user.Email)
+	isUserUsernameExist , _ :=  users.Contains("username" , user.Username)
 
-	if( isUserExist ){
+	if( isUserEmailExist || isUserUsernameExist ){
 		return "USER_ALREADY_EXIST"
 	}
 
@@ -44,28 +47,46 @@ func (users Users) RegisterUser(user UserData) string{
 	return "USER_CREATED"
 }
 
-func (users Users) LoginUser(user UserData) string {
+func (users Users) LoginUser(user UserData) (string , string){
 
-	isUserExist := users.Contains("email" , user.Email) || users.Contains("username" , user.Username) 
+	log.Print("user start login ")
+
+	isUserExist , item := users.Contains("email" , user.Email)
 
 	if ( !isUserExist ){
-		log.Print("User not exist")
-		return "USER_NOT_EXIST"
+		return "USER_NOT_EXIST" , ""
 	} 
 
-	return "USER_LOGIN"
+	if ( item.Password != user.Password){
+		return "USER_PASSWORD_FALSE" , ""
+	}
+
+	expiresTime := time.Now().Add(2*time.Minute)
+	token := security.GenerateToken(item.Username , expiresTime.Unix())
+
+	return "USER_LOGIN" , token
 		
 }
 
-func (users Users) Contains( key string , username string ) bool{
+func (users Users) Contains( key string , value string ) ( bool , UserData ){
 
-	filter := bson.M{ key: username }
+	var item UserData 
+
+	filter := bson.M{ key: value }
+
+	log.Print("user start FIND ")
 
 	findRes := users.collection.FindOne(users.ctx , filter)
 
+	log.Print("user start decode ")
+
+	findRes.Decode(&item)
+
+	log.Print("user start END decode ")
+
 	if (findRes.Err() == nil){
-		return true
+		return true , item
 	} else {
-		return false
+		return false , item
 	}
 }

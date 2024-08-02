@@ -33,20 +33,21 @@ export default function MediaPlaylists({func}:{func:Function}) {
         link:"" ,
         time : "1:20:42" ,
     },
-]
-    const renderPlaylists = () => {
-      if(loginContext?.isLoggedIn){
-
-       //  Запрос плейлистов 
-       return <Playlists playlists={playlists}></Playlists> 
-       
-      }
-      else{
-        return <MediaRecomendationBlock func={func}></MediaRecomendationBlock>
-      }
-    }
+  ] 
   
-    return(
-      renderPlaylists()
-    )
+  const renderPlaylists = () => {
+    if(loginContext?.isLoggedIn){
+
+      //  Запрос плейлистов 
+      return <Playlists playlists={playlists}></Playlists> 
+      
+    }
+    else{
+      return <MediaRecomendationBlock func={func}></MediaRecomendationBlock>
+    }
+  }
+
+  return(
+    renderPlaylists()
+  )
 }

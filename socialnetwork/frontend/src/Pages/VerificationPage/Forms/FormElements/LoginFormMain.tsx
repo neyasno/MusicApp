@@ -25,31 +25,57 @@ export default function LoginFormMain() {
 
     action.preventDefault();
 
+    console.log("SEND GET RESPONSE")
+
+    loginRequest()
+  }
+
+  const loginRequest = () => {
+
     const url = "http://localhost:8080/api/login"
 
     axios.get(url , {
-      params:{
-        email , 
-        password
-      }
-    }).then( (resp) => { 
-      console.log(resp)
-      if(resp.data == "USER_LOGIN"){
+                      params:{
+                        email , 
+                        password
+                      },
+                      withCredentials: true
+                    }
+    ).then( (resp) => { 
+
+      const answerCode = resp.data["code"]
+
+      switch(answerCode){
+        case ("USER_LOGIN"):{
+
+          setToken(resp.data["token"]);
 
           loginContext?.setLoggedIn(true)
+  
           navigator("/")
-          
+
+        }
+        case ("USER_NOT_EXIST"):{
+          setError("Аккаунт не существует")
+        }
+        case ("USER_PASSWORD_FALSE"):{
+          setError("Данные для входа не верны")
+        }
+        default :{
+          setError("Ошибка")
+        }
       }
-      else if (resp.data == "USER_NOT_EXIST"){
-        setError("Аккаунт не существует")
-      }
-      else if (resp.data == "USER_PASSWORD_FALSE"){
-        setError("Данные для входа не верны")
-      }
-      else{
-        setError("Ошибка")
-      }
+      
     })
+  }
+
+  const setToken = (token : string) =>{
+
+    const date = new Date()
+    date.setTime(date.getTime() + (2 * 60 * 1000))
+    const expireTime = "expireTime=" + date.toUTCString() + ";"
+
+    document.cookie = "token=" + token + ";path=/;" + expireTime
   }
 
   return (
