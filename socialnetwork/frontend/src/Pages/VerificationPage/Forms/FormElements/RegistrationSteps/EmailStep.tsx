@@ -1,6 +1,7 @@
 import React , {useState} from 'react'
 import InputField from '../../FormComponents/InputField';
 import SubmitButton from '../../FormComponents/SubmitButton';
+import RegistrationRange from '../../FormComponents/RegistrationRange';
 
 interface IEmailStep{
   step : number , 
@@ -41,15 +42,16 @@ export default function EmailStep({step , setStep , email , setEmail}:IEmailStep
 
   return (
     <>
-        <InputField title='Электронная почта или имя пользователя' 
-                    placeholder='Электронная почта или имя пользователя'
-                    input_type="text" 
-                    value={email} 
-                    action={(action : React.ChangeEvent<HTMLInputElement>) =>{onEmailChange(action)}} >
-        </InputField> 
-        <div className='flex py-5 items-center text-red-600'>{emailError}</div>
-        <SubmitButton text='Далее' func={(action : React.FormEvent<HTMLInputElement>) =>{onEmailSubmit(action)}}>
-        </SubmitButton>
+      <RegistrationRange></RegistrationRange>
+      <InputField title='Электронная почта или имя пользователя' 
+                  placeholder='Электронная почта или имя пользователя'
+                  input_type="text" 
+                  value={email} 
+                  action={(action : React.ChangeEvent<HTMLInputElement>) =>{onEmailChange(action)}} >
+      </InputField> 
+      <div className='flex py-5 items-center text-red-600'>{emailError}</div>
+      <SubmitButton text='Далее' func={(action : React.FormEvent<HTMLInputElement>) =>{onEmailSubmit(action)}}>
+      </SubmitButton>
     </>
   )
 }

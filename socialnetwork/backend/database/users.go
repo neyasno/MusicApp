@@ -29,54 +29,54 @@ func (db Database) Users() Users {
 	}
 }
 
-func (users Users) RegisterUser(user UserData) string{
+func (users Users) RegisterUser(user UserData) string {
 
-	isUserEmailExist , _ :=  users.Contains("email" , user.Email)
-	isUserUsernameExist , _ :=  users.Contains("username" , user.Username)
+	isUserEmailExist, _ := users.Contains("email", user.Email)
+	isUserUsernameExist, _ := users.Contains("username", user.Username)
 
-	if( isUserEmailExist || isUserUsernameExist ){
+	if isUserEmailExist || isUserUsernameExist {
 		return "USER_ALREADY_EXIST"
 	}
 
-	result, err  := users.collection.InsertOne(users.ctx, user)
+	result, err := users.collection.InsertOne(users.ctx, user)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	log.Print("user has been added with ID : " , result.InsertedID)
+	log.Print("user has been added with ID : ", result.InsertedID)
 	return "USER_CREATED"
 }
 
-func (users Users) LoginUser(user UserData) (string , string){
+func (users Users) LoginUser(user UserData) (string, string) {
 
 	log.Print("user start login ")
 
-	isUserExist , item := users.Contains("email" , user.Email)
+	isUserExist, item := users.Contains("email", user.Email)
 
-	if ( !isUserExist ){
-		return "USER_NOT_EXIST" , ""
-	} 
-
-	if ( item.Password != user.Password){
-		return "USER_PASSWORD_FALSE" , ""
+	if !isUserExist {
+		return "USER_NOT_EXIST", ""
 	}
 
-	expiresTime := time.Now().Add(2*time.Minute)
-	token := security.GenerateToken(item.Username , expiresTime.Unix())
+	if item.Password != user.Password {
+		return "USER_PASSWORD_FALSE", ""
+	}
 
-	return "USER_LOGIN" , token
-		
+	expiresTime := time.Now().Add(2 * time.Minute)
+	token := security.GenerateToken(item.Username, expiresTime.Unix())
+
+	return "USER_LOGIN", token
+
 }
 
-func (users Users) Contains( key string , value string ) ( bool , UserData ){
+func (users Users) Contains(key string, value string) (bool, UserData) {
 
-	var item UserData 
+	var item UserData
 
-	filter := bson.M{ key: value }
+	filter := bson.M{key: value}
 
 	log.Print("user start FIND ")
 
-	findRes := users.collection.FindOne(users.ctx , filter)
+	findRes := users.collection.FindOne(users.ctx, filter)
 
 	log.Print("user start decode ")
 
@@ -84,9 +84,9 @@ func (users Users) Contains( key string , value string ) ( bool , UserData ){
 
 	log.Print("user start END decode ")
 
-	if (findRes.Err() == nil){
-		return true , item
+	if findRes.Err() == nil {
+		return true, item
 	} else {
-		return false , item
+		return false, item
 	}
 }
