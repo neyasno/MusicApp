@@ -7,6 +7,20 @@ import (
 	"net/http"
 )
 
+func initResponseData( writer http.ResponseWriter, request *http.Request ) database.UserData {
+
+	var responseData database.UserData
+
+	err := json.NewDecoder(request.Body).Decode(&responseData)
+
+	if err != nil {
+		http.Error(writer, "Bad request", http.StatusBadRequest)
+	}
+
+	return responseData
+
+}
+
 func LoginHandler(users database.Users)  http.HandlerFunc {
 
 	return func(writer http.ResponseWriter, request *http.Request) {
@@ -38,19 +52,5 @@ func RegistrationHandler(users database.Users) http.HandlerFunc {
 		log.Print(result)
 		writer.Write([]byte(result))
 	}
-
-}
-
-func initResponseData( writer http.ResponseWriter, request *http.Request ) database.UserData {
-
-	var responseData database.UserData
-
-	err := json.NewDecoder(request.Body).Decode(&responseData)
-
-	if err != nil {
-		http.Error(writer, "Bad request", http.StatusBadRequest)
-	}
-
-	return responseData
 
 }
