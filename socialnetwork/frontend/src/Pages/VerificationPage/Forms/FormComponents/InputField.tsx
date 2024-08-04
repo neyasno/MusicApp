@@ -8,7 +8,7 @@ interface IInputField{
     placeholder? : string ,
 }
 
-export default function InputField(props : IInputField) {
+ function InputF(props : IInputField) {
   return (
     <>
     <h3 className='pb-2 pt-5'>{props.title}</h3>
@@ -19,3 +19,7 @@ export default function InputField(props : IInputField) {
     </>
   )
 }
+
+const InputField = React.memo(InputF)
+
+export default InputField

@@ -53,11 +53,11 @@ export default function Controller() {
 
     
   return (
-    <div className='flex flex-col justify-center items-center w-full'>
+    <div className='flex flex-col justify-center items-center w-full h-f'>
 
         <audio src="/222.mp3" ref={audio}> </audio>
 
-        <div className='flex justify-center items-center py-2'>
+        <div className='flex justify-center items-center'>
             <button>
                 <svg className="w-7 fill-main_l_grey" viewBox="0 0 32 32" transform="scale(-1 1)" >
                     <path d="M28.448 17.261 15.552 27.739C14.698 28.432 14 28.1 14 27v-6.938l-9.448 7.676C3.698 28.432 3 28.1 3 27V5c0-1.1.698-1.432 1.552-.739L14 11.937V5c0-1.1.698-1.432 1.552-.739l12.896 10.478c.854.693.854 1.829 0 2.522" />

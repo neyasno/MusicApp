@@ -48,8 +48,25 @@ export default {
         34:"8.5rem"
       },
       spacing:{
-        '1/10': "10%"
+        '1/10': "10%" ,
+        '11/12': "91%",
+        '1/12' : "9%" ,
+        '10/12':"83%",
+      },
+      gridTemplateRows:{
+        '16': "repeat(16, minmax(0, 1fr))"
+      },
+      gridRow:{
+        'span-14' : "span 14 / span 14"
+      },
+      gridTemplateColumns:{
+        '16': "repeat(16, minmax(0, 1fr))"
+      },
+      gridColumn:{
+        'span-14' : "span 14 / span 14" ,
+        'span-13' : "span 13 / span 13"
       }
+      
     },
   },
   plugins: [],

@@ -184,8 +184,8 @@ export default function ContentCollection() {
     return (
         <section>
             <div className='p-4 pt-0'>
-                {dividedData.map((item) =>(
-                    <ItemsContainer title='' link='' items={item}></ItemsContainer>
+                {dividedData.map((item , key) =>(
+                    <ItemsContainer title='' link='' items={item} key={key}></ItemsContainer>
                 ))}
             </div>
         </section>

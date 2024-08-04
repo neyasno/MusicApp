@@ -1,40 +1,24 @@
 import VerificationPage from './VerificationPage/VerificationPage'
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { Route, Routes } from 'react-router-dom'
 import { EVerificationType } from './VerificationPage/VerificationTypes'
 import MainPage from './MainPage/MainPage'
 import { EContent } from './MainPage/MainPageTypes'
+import MainPageContent from './MainPage/MainPageParts/MainContent/MainPageContent'
+import React from 'react'
 
-export default function Pages() {
+const Pages = () => {
   return (
       <Routes>
-        <Route path='/' element={
-          <MainPage activeContent={EContent.MAIN}></MainPage>
-        } />
+        <Route path='/' element={<MainPage/>}>
+          <Route path='/' element={ <MainPageContent activeContent={EContent.MAIN}/> }/>
+          <Route path='/categories' element={ <MainPageContent activeContent={EContent.CATEGORIES}/> } />
+          <Route path='/search/' element={ <MainPageContent activeContent={ EContent.SEARCH_RESULTS}/>} />
+          <Route path='/search/:category' element={ <MainPageContent activeContent={ EContent.SEARCH_RESULTS}/> } />
+          <Route path='/search/:category/:params' element={ <MainPageContent activeContent={ EContent.SEARCH_RESULTS}/>} />
+          <Route path='/section/:id' element={ <MainPageContent activeContent={EContent.COLLECTION}/> } />
+          <Route path='/section/collection/:id' element={ <MainPageContent activeContent={EContent.COLLECTION}/> } />
 
-
-        <Route path='/categories' element={
-          <MainPage activeContent={EContent.CATEGORIES}></MainPage>
-        } />
-
-
-        <Route path='/search/' element={
-          <MainPage activeContent={EContent.SEARCH_RESULTS}></MainPage>
-        } />
-        <Route path='/search/:category' element={
-          <MainPage activeContent={EContent.SEARCH_RESULTS}></MainPage>
-        } />
-        <Route path='/search/:category/:params' element={
-          <MainPage activeContent={EContent.SEARCH_RESULTS}></MainPage>
-        } />
-
-
-        <Route path='/section/:id' element={
-          <MainPage activeContent={EContent.CARD}></MainPage>
-        } />
-        <Route path='/section/collection/:id' element={
-          <MainPage activeContent={EContent.COLLECTION}></MainPage>
-        } />
-
+      </Route>
 
         <Route path='/login' element={
           <VerificationPage type={EVerificationType.LOGIN}></VerificationPage>
@@ -55,3 +39,7 @@ export default function Pages() {
       </Routes>
   )
 }
+
+export default React.memo(Pages)
+
+

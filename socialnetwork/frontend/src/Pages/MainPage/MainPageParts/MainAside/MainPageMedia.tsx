@@ -7,7 +7,7 @@ import { EActionPages } from "../../../ActionPageTypes";
 
 export default function MainPageMedia() {
   return (
-    <div className="flex flex-col p-2 mt-2 rounded-lg bg-main_black text-main_l_grey font-bold h-full w-full">
+    <div className="flex flex-col p-2 rounded-lg bg-main_black text-main_l_grey font-bold w-full h-full">
         <MediaHeader func={openPlaylistCreateWindow}></MediaHeader>
         <MediaPlaylists func={openPlaylistCreateWindow}></MediaPlaylists>
         <MediaNavigation ></MediaNavigation>
