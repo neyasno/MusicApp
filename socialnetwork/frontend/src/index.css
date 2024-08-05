@@ -18,3 +18,19 @@ html , body{
     border: 1px solid green;
 }
 
+.music_range{
+    appearance: none;
+    height: 5px;
+    background: rgb(55,55,55);
+}
+
+.music_range::-webkit-slider-thumb{
+    appearance: none;
+    background-color: white;
+    width: 10px;
+    height: 10px;
+    border-radius: 100%;
+    justify-content: center;
+    padding: 4px;
+}
+

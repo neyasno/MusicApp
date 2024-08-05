@@ -1,6 +1,6 @@
 
 import { Link } from 'react-router-dom'
-import { ITrackPortative } from '../MainContent/MainContentComponents/TrackComponents/TrackPortative'
+import { ITrackPortative } from '../../MainContent/MainContentComponents/TrackComponents/TrackPortative'
 
 export default function PlayerTrack({title , description , img ,  time , link}:ITrackPortative) {
   return (

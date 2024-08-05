@@ -1,7 +1,7 @@
 
-import AdditionalSettings from "./AdditionalSettings";
-import Controller from "./Controller";
-import PlayerTrack from "./PlayerTrack";
+import AdditionalSettings from "./PlayerComponents/AdditionalSettings";
+import Controller from "./PlayerComponents/Controller";
+import PlayerTrack from "./PlayerComponents/PlayerTrack";
 
 
 export default function Player() {

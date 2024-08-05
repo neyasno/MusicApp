@@ -20,7 +20,7 @@ export default function Controller() {
     }
 
     const updateTime = () =>{
-        if(audio.current?.currentTime){
+        if(audio.current){
             setCurrentTime( Math.floor(audio.current?.currentTime) )
         }
     }
@@ -57,35 +57,40 @@ export default function Controller() {
 
         <audio src="/222.mp3" ref={audio}> </audio>
 
-        <div className='flex justify-center items-center'>
+        <div className='flex justify-center items-center '>
+
             <button>
-                <svg className="w-7 fill-main_l_grey" viewBox="0 0 32 32" transform="scale(-1 1)" >
+                <svg className="w-5 fill-main_l_grey" viewBox="0 0 32 32" transform="scale(-1 1)" >
                     <path d="M28.448 17.261 15.552 27.739C14.698 28.432 14 28.1 14 27v-6.938l-9.448 7.676C3.698 28.432 3 28.1 3 27V5c0-1.1.698-1.432 1.552-.739L14 11.937V5c0-1.1.698-1.432 1.552-.739l12.896 10.478c.854.693.854 1.829 0 2.522" />
                 </svg>
             </button>
+
             <button className="px-5" onClick={()=>{playAudio()}}>
             
-                <svg className="w-10 fill-main_l_grey" viewBox="-4 -3 24 24" >
-                    <path d="M13.82 9.523a.976.976 0 0 0-.324-1.363L3.574 2.128a1.03 1.03 0 0 0-.535-.149c-.56 0-1.013.443-1.013.99V15.03c0 .185.053.366.153.523.296.464.92.606 1.395.317l9.922-6.031c.131-.08.243-.189.325-.317zm.746 1.997-9.921 6.031c-1.425.867-3.3.44-4.186-.951A2.9 2.9 0 0 1 0 15.03V2.97C0 1.329 1.36 0 3.04 0c.567 0 1.123.155 1.605.448l9.921 6.032c1.425.866 1.862 2.696.975 4.088-.246.386-.58.712-.975.952"/>
+                <svg className="w-8 fill-main_l_grey" viewBox="0 0 24 24" >
+                {isPlaying&&<path d="M9 6a1 1 0 0 1 1 1v10a1 1 0 1 1-2 0V7a1 1 0 0 1 1-1m6 0a1 1 0 0 1 1 1v10a1 1 0 1 1-2 0V7a1 1 0 0 1 1-1"/>}
+                {!isPlaying&&<path d="M18.54 9 8.88 3.46a3.42 3.42 0 0 0-5.13 3v11.12A3.42 3.42 0 0 0 7.17 21a3.43 3.43 0 0 0 1.71-.46L18.54 15a3.42 3.42 0 0 0 0-5.92Zm-1 4.19-9.66 5.62a1.44 1.44 0 0 1-1.42 0 1.42 1.42 0 0 1-.71-1.23V6.42a1.42 1.42 0 0 1 .71-1.23A1.5 1.5 0 0 1 7.17 5a1.54 1.54 0 0 1 .71.19l9.66 5.58a1.42 1.42 0 0 1 0 2.46Z"/>}
                 </svg>
             </button>
+            
             <button>
-                <svg className="w-7 fill-main_l_grey" viewBox="0 0 32 32" >
+                <svg className="w-5 fill-main_l_grey" viewBox="0 0 32 32" >
                     <path d="M28.448 17.261 15.552 27.739C14.698 28.432 14 28.1 14 27v-6.938l-9.448 7.676C3.698 28.432 3 28.1 3 27V5c0-1.1.698-1.432 1.552-.739L14 11.937V5c0-1.1.698-1.432 1.552-.739l12.896 10.478c.854.693.854 1.829 0 2.522"/>
                 </svg>
             </button>
         </div>
 
-        <div className="flex w-1/2 pb-3 text-main_l_grey">
+        <div className="flex w-1/2  text-main_l_grey items-center">
             <p>{setTime(currentTime)}</p>
 
-            <input type="range" className="w-full rounded-full mx-5  hover:bg-main_red" 
+            <input type="range" className="w-full mx-5 rounded-full p-0 music_range" 
                     value={currentTime}
                     min={0}
                     max={ audio.current?.duration ? Math.floor(audio.current?.duration) : 100}
                     onChange={
                         (action)=>{
-                            if(audio.current?.currentTime){
+                            console.log("change" , audio.current?.currentTime)
+                            if(audio.current){
                                 audio.current.currentTime = Number.parseInt(action.currentTarget?.value)
                             }
                         }
