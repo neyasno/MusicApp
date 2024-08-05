@@ -42,7 +42,7 @@ export default function EmailStep({step , setStep , email , setEmail}:IEmailStep
 
   return (
     <>
-      <RegistrationRange></RegistrationRange>
+      <RegistrationRange step={step}></RegistrationRange>
       <InputField title='Электронная почта или имя пользователя' 
                   placeholder='Электронная почта или имя пользователя'
                   input_type="text" 

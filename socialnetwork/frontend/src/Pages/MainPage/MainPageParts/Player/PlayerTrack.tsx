@@ -4,7 +4,7 @@ import { ITrackPortative } from '../MainContent/MainContentComponents/TrackCompo
 
 export default function PlayerTrack({title , description , img ,  time , link}:ITrackPortative) {
   return (
-    <div className='flex items-center justify-between rounded-md p-4 w-3/12'>
+    <div className='flex items-center justify-between rounded-md pl-4 w-3/12'>
         <div className='flex'>
             <div className='pr-2 w-16'>
                 <img className="rounded-md" src={img} alt="" />

@@ -1,8 +1,11 @@
 import axios from 'axios';
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
+import RegistrationRange from '../../FormComponents/RegistrationRange';
 
-export default function PersonStep( { email , password}:{email:string , password:string}) {
+type PersonStepProps = {step : number , setStep:Function , email:string , password:string }
+
+export default function PersonStep( { step , setStep ,email , password }: PersonStepProps) {
 
   const [username , setUsername] = useState('');
   const [err , setError] = useState('');
@@ -35,7 +38,8 @@ export default function PersonStep( { email , password}:{email:string , password
         navigator("/login")
       }
       else{
-        setError("Ошибка , пользователь c такой почтой , или ником уже существует")
+        setError("Ошибка , пользователь cуществует")
+        
       }
 
     })
@@ -44,6 +48,7 @@ export default function PersonStep( { email , password}:{email:string , password
 
   return (
     <>
+    <RegistrationRange step={step}></RegistrationRange>
     <h3 className='py-2'>Название</h3>
     <input type='text' placeholder='Ваш желаемый никнейм' 
         className='bg-main_black border-1 border-gray-500 rounded-md outline-white w-96 h-12 py-5 px-3 text-ellipsis text-lg'

@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import InputField from '../../FormComponents/InputField';
+import RegistrationRange from '../../FormComponents/RegistrationRange';
 
 function PasswordRule(props :{text:string , rule : boolean}){
     return(
@@ -69,8 +70,9 @@ export default function PasswordStep({step , setStep , password , setPassword} :
 
   return (
     <>
+    <RegistrationRange step={step}></RegistrationRange>
     <InputField title='Пароль' input_type='password' value={password} action={(action : React.ChangeEvent<HTMLInputElement>)=>{onPasswordChange(action)}}></InputField> 
-    <div className='flex py-5 items-center text-main_red'>{passwordError  }</div>
+    <div className='flex py-5 items-center text-main_red'>{passwordError}</div>
     <h4>Пароль должен содержать как минимум:</h4>
     <ul className='mb-5'>
         <PasswordRule rule={haveOneLetter} text='1 букву' ></PasswordRule>

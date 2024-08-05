@@ -22,7 +22,7 @@ export default function RegistrationFormMain() {
       break;
     }
     case 2:{
-      active_step = <PersonStep email={email} password={password}></PersonStep>
+      active_step = <PersonStep step={regStep} setStep={setRegStep} email={email} password={password}></PersonStep>
       break;
     }
 
@@ -32,10 +32,10 @@ export default function RegistrationFormMain() {
 
   return (
     <div className='border-b-1 border-t-1 border-gray-500 w-full flex justify-center'>
-        <div className='py-10 text-main_WHITE'>
-        <form action="post" >
-          {active_step}
-        </form>
+        <div className='py-10 text-main_WHITE w-8/12'>
+          <form action="post" >
+            {active_step}
+          </form>
         </div>
     </div>
   )
