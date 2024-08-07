@@ -5,6 +5,7 @@ import (
 	"log"
 
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
@@ -21,14 +22,18 @@ func (db Database) Authors() Authors {
 }
 
 type Author struct{
-	Id string
-	Title string
-	Description string
-	Img string
+	Id primitive.ObjectID `bson:"_id,omitempty" json:"id,omitempty"`
+	Title string `bson:"title" json:"title"`
+	Description string `bson:"description" json:"description"`
+	Image string `bson:"image" json:"image"`
 }
 
 func (authors Authors) AddAuthor (author Author){
-	authors.collection.InsertOne(authors.ctx , author)
+
+	_ , err := authors.collection.InsertOne(authors.ctx , author)
+	if err!=nil {
+		log.Fatal(err)
+	}
 }
 
 func (authors Authors) GetAuthor ( id string ) Author {
@@ -39,6 +44,15 @@ func (authors Authors) GetAuthor ( id string ) Author {
 	}
 
 	return author
+}
+
+func (author Author) ToContentBlock () ContentBlock{
+	return ContentBlock{
+		Id: author.Id,
+		Title: author.Title,
+		Description: author.Description,
+		Image: author.Image,
+	}
 }
 
 func (table Authors) contains(key string, value string) (bool, Author) {
@@ -56,8 +70,3 @@ func (table Authors) contains(key string, value string) (bool, Author) {
 		return false, item
 	}
 }
-
-func (author Author) GetId() string { return author.Id}
-func (author Author) GetTitle() string { return author.Title}
-func (author Author) GetDescription() string { return author.Description}
-func (author Author) GetImage() string { return author.Img}

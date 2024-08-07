@@ -5,6 +5,7 @@ import (
 	"log"
 
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
@@ -21,13 +22,13 @@ func (db Database) ContentLines() ContentLines{
 }
 
 type ContentLine struct {
-	Title   string
-	Type_of string
-	Link    string
-	Data    []ContentUnit
+	Id primitive.ObjectID `bson:"_id,omitempty" json:"id,omitempty"`
+	Title   string `bson:"title" json:"title"`
+	Type_of string	`bson:"type_of" json:"type_of"`
+	Items    []ContentBlock `bson:"items" json:"items"`
 }
 
-func (contentLines ContentLines) GetContentLine(title string) ContentLine{
+func (contentLines ContentLines) GetContentLineByTitle(title string) ContentLine{
 	isExist , result := contentLines.contains("title" , title);
 	if !isExist{
 		log.Print("no such contentline exist")
@@ -36,7 +37,10 @@ func (contentLines ContentLines) GetContentLine(title string) ContentLine{
 }
 
 func (contentLines ContentLines) AddContentLine( item ContentLine){
-	contentLines.collection.InsertOne(contentLines.ctx , item)
+	_ , err := contentLines.collection.InsertOne(contentLines.ctx , item)
+	if err!= nil {
+		log.Fatal(err)
+	}
 }
 
 func (table ContentLines) contains(key string, value string) (bool, ContentLine) {

@@ -19,10 +19,10 @@ type UserData struct {
 	Email    string `json:"email"`
 	Password string `json:"password"`
 	Username string `json:"username"`
+	Playlists Playlists `json:"playlists"`
 }
 
 func (db Database) Users() Users {
-
 	return Users{
 		collection: *db.data.Collection("users"),
 		ctx:        db.ctx,
@@ -59,7 +59,7 @@ func (users Users) LoginUser(user UserData) (string, string) {
 		return "USER_PASSWORD_FALSE", ""
 	}
 
-	expiresTime := time.Now().Add(2 * time.Minute)
+	expiresTime := time.Now().Add(20 * time.Minute)
 	token := security.GenerateToken(item.Username, expiresTime.Unix())
 
 	return "USER_LOGIN", token

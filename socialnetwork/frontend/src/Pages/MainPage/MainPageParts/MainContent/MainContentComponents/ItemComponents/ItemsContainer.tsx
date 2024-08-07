@@ -1,10 +1,16 @@
 import Item, { IItem } from "./Item"
 
+interface IItemServer {
+    Title:string , 
+    Description : string ,
+    Image : string , 
+    Link : string ,
+}
 
 interface IItemsContainer{
     title:string , 
     link?:string , 
-    items?: IItem[]
+    items?: IItemServer[]
 }
 
 export default function ItemsContainer( {title , link , items} : IItemsContainer) {
@@ -18,7 +24,7 @@ export default function ItemsContainer( {title , link , items} : IItemsContainer
         <ul>
             <div className="flex">
                 {items?.map((item , key)=>(
-                    <Item title={item.title} isRounded={false} description={item.description} image={item.image} link={item.link} 
+                    <Item title={item.Title} isRounded={false} description={item.Description} image={item.Image} link={item.Link} 
                         key={key}></Item>
                 ))}
             </div>

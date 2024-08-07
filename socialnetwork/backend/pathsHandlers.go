@@ -7,7 +7,7 @@ import (
 	"net/http"
 )
 
-func initResponseData( writer http.ResponseWriter, request *http.Request ) database.UserData {
+func InitResponseData( writer http.ResponseWriter, request *http.Request ) database.UserData {
 
 	var responseData database.UserData
 
@@ -21,22 +21,22 @@ func initResponseData( writer http.ResponseWriter, request *http.Request ) datab
 
 }
 
-func LoginHandler(users database.Users)  http.HandlerFunc {
+func LoginHandler(users database.Users) http.HandlerFunc {
 
 	return func(writer http.ResponseWriter, request *http.Request) {
 
 		params := request.URL.Query()
 
 		user := database.UserData{
-			Email: params.Get("email"),
-			Password: params.Get("password") ,
+			Email:    params.Get("email"),
+			Password: params.Get("password"),
 		}
 
-		result , token := users.LoginUser(user)
+		result, token := users.LoginUser(user)
 
 		json.NewEncoder(writer).Encode(map[string]string{
-			"code": result ,
-			"token" : token, 
+			"code":  result,
+			"token": token,
 		})
 	}
 
@@ -45,7 +45,7 @@ func LoginHandler(users database.Users)  http.HandlerFunc {
 func RegistrationHandler(users database.Users) http.HandlerFunc {
 	return func(writer http.ResponseWriter, request *http.Request) {
 
-		responseData := initResponseData(writer,request)
+		responseData := InitResponseData(writer, request)
 
 		result := users.RegisterUser(responseData)
 

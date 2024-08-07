@@ -5,6 +5,7 @@ import (
 	"log"
 
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
@@ -22,22 +23,15 @@ func (db Database) Content() Content {
 }
 
 type ContentData struct{
-	title string
-	data []ContentLine
+	Title string
+	Data []ContentLine
 }
 
 type ContentBlock struct{
-	Id string
-	title string 
-	description string
-	img string
-}
-
-type ContentUnit interface{
-	GetTitle() string
-	GetDescription() string
-	GetImage() string
-	GetId() string
+	Id primitive.ObjectID `bson:"_id,omitempty" json:"id,omitempty"`
+	Title string `bson:"title" json:"title"`
+	Description string `bson:"description" json:"description"`
+	Image string `bson:"image" json:"image"`
 }
 
 func (content Content) GetContent (title string) ContentData {
@@ -48,7 +42,13 @@ func (content Content) GetContent (title string) ContentData {
 	}
 
 	return resultContent
+}
 
+func (content Content) AddContent (contentData ContentData){
+	_ , err := content.collection.InsertOne(content.ctx , contentData)
+	if err != nil {
+		log.Print(err)
+	}
 }
 
 func (content Content) contains(key string, value string) (bool, ContentData) {
