@@ -1,6 +1,7 @@
 package security
 
 import (
+	"fmt"
 	"log"
 
 	"github.com/dgrijalva/jwt-go"
@@ -13,7 +14,7 @@ type Claims struct{
 
 func GenerateToken(username string , expiresTime int64) string {
 
-	jwtKey := []byte("a_very_secret_key_that_should_be_long_and_random")
+	jwtKey := []byte("fmsdp23n5fndopsamfpom32mfsdf230f9dfosdmfsd1111sfsd")
 
 	claims := &Claims{
 		Username: username,
@@ -32,9 +33,27 @@ func GenerateToken(username string , expiresTime int64) string {
 	return tokenString
 }
 
-// func CheckToken (request *http.Request) (*Claims) {
+func CheckToken (tokenString string) (*Claims, error){
 
-// 	tokenString := request.Header.Get("Autho")
-// 	return
+	jwtKey := []byte("fmsdp23n5fndopsamfpom32mfsdf230f9dfosdmfsd1111sfsd")
 
-// }
+	claims := &Claims{}
+	token , err := jwt.ParseWithClaims(tokenString , claims , func(token *jwt.Token) (interface{}, error) {
+
+		if _ , ok := token.Method.(*jwt.SigningMethodHMAC); !ok{
+			return nil , fmt.Errorf("unexpected signing method: %v", token.Header["alg"])
+		} 
+		return jwtKey, nil
+	})
+
+	if err != nil {
+        return nil, err
+    }
+
+	if !token.Valid {
+        return nil, fmt.Errorf("invalid token")
+    }
+
+	return claims, nil
+
+}

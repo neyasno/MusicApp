@@ -53,16 +53,20 @@ export default function LoginFormMain() {
           loginContext?.setLoggedIn(true)
   
           navigator("/")
+          break
 
         }
         case ("USER_NOT_EXIST"):{
           setError("Аккаунт не существует")
+          break
         }
         case ("USER_PASSWORD_FALSE"):{
           setError("Данные для входа не верны")
+          break
         }
         default :{
           setError("Ошибка")
+          break
         }
       }
       

@@ -36,4 +36,3 @@ func InitDatabase(ctx context.Context) Database {
 
 	return db
 }
-

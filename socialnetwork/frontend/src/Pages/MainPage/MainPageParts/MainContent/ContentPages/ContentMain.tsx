@@ -1,5 +1,7 @@
+import { useEffect } from "react";
 import { IItem } from "../MainContentComponents/ItemComponents/Item";
 import ItemsContainer from "../MainContentComponents/ItemComponents/ItemsContainer";
+import axios from "axios";
 
 export default function ContentMain() {
 
@@ -48,6 +50,35 @@ export default function ContentMain() {
     },
 
   ]
+  let data 
+  useEffect(()=>{
+
+    const url = "http://localhost:8080/api/content"
+
+    function getCookieValue(name :string) {
+
+      const cookies = document.cookie.split('; ');
+    
+      for (let i = 0; i < cookies.length; i++) {
+
+        const cookie = cookies[i];
+        const [cookieName, cookieValue] = cookie.split('=');
+    
+        if (cookieName === name) {
+          return cookieValue;
+        }
+      }
+  
+      return null;
+    }
+    console.log(getCookieValue("token"))
+    axios.get(url , {
+      params:{
+        token : getCookieValue("token"), 
+      }
+    }).then((resp) => {data = resp.data})
+
+  } , [])
 
   return (
     <section>

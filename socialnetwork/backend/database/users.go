@@ -10,15 +10,15 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
+type Users struct {
+	collection mongo.Collection
+	ctx        context.Context
+}
+
 type UserData struct {
 	Email    string `json:"email"`
 	Password string `json:"password"`
 	Username string `json:"username"`
-}
-
-type Users struct {
-	collection mongo.Collection
-	ctx        context.Context
 }
 
 func (db Database) Users() Users {
@@ -31,8 +31,8 @@ func (db Database) Users() Users {
 
 func (users Users) RegisterUser(user UserData) string {
 
-	isUserEmailExist, _ := users.Contains("email", user.Email)
-	isUserUsernameExist, _ := users.Contains("username", user.Username)
+	isUserEmailExist, _ := users.contains("email", user.Email)
+	isUserUsernameExist, _ := users.contains("username", user.Username)
 
 	if isUserEmailExist || isUserUsernameExist {
 		return "USER_ALREADY_EXIST"
@@ -49,9 +49,7 @@ func (users Users) RegisterUser(user UserData) string {
 
 func (users Users) LoginUser(user UserData) (string, string) {
 
-	log.Print("user start login ")
-
-	isUserExist, item := users.Contains("email", user.Email)
+	isUserExist, item := users.contains("email", user.Email)
 
 	if !isUserExist {
 		return "USER_NOT_EXIST", ""
@@ -68,21 +66,14 @@ func (users Users) LoginUser(user UserData) (string, string) {
 
 }
 
-func (users Users) Contains(key string, value string) (bool, UserData) {
+func (table Users) contains(key string, value string) (bool, UserData) {
 
 	var item UserData
 
 	filter := bson.M{key: value}
 
-	log.Print("user start FIND ")
-
-	findRes := users.collection.FindOne(users.ctx, filter)
-
-	log.Print("user start decode ")
-
+	findRes := table.collection.FindOne(table.ctx, filter)
 	findRes.Decode(&item)
-
-	log.Print("user start END decode ")
 
 	if findRes.Err() == nil {
 		return true, item

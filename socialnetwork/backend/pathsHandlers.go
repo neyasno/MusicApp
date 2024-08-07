@@ -54,3 +54,18 @@ func RegistrationHandler(users database.Users) http.HandlerFunc {
 	}
 
 }
+
+func ContentHandler(content database.Content) http.HandlerFunc {
+
+	return func(writer http.ResponseWriter, request *http.Request) {
+		
+		result := content.GetContent("main")
+
+		err := json.NewEncoder(writer).Encode(result)
+		if err != nil{
+			http.Error(writer , err.Error() , http.StatusInternalServerError)
+		}
+
+	}
+
+}

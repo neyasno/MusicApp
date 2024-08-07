@@ -1,27 +1,60 @@
 package middleware
 
 import (
+	"backend/security"
+	"log"
 	"net/http"
 )
 
 func WithMiddleware(next http.HandlerFunc) http.HandlerFunc {
+	next = logMiddleware(next)
 	next = corsMiddleware(next)
 	return next
 }
 
-func corsMiddleware(next http.HandlerFunc) http.HandlerFunc {
-	return func(w http.ResponseWriter, r *http.Request) {
-		w.Header().Set("Access-Control-Allow-Origin", "http://localhost:5173")
-		w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
-		w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization")
-		w.Header().Set("Access-Control-Allow-Credentials", "true")
+func WithTokenMiddleware(next http.HandlerFunc) http.HandlerFunc {
+	next = logMiddleware(next)
+	next = corsMiddleware(next)
+	next = tokenMiddleware(next)
+	return next
+}
 
-		if r.Method == "OPTIONS" {
-			w.WriteHeader(http.StatusOK)
+
+func corsMiddleware(next http.HandlerFunc) http.HandlerFunc {
+	return func(writer http.ResponseWriter, request *http.Request) {
+		writer.Header().Set("Access-Control-Allow-Origin", "http://localhost:5173")
+		writer.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
+		writer.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization")
+		writer.Header().Set("Access-Control-Allow-Credentials", "true")
+
+		if request.Method == "OPTIONS" {
+			writer.WriteHeader(http.StatusOK)
 			return
 		}
 
-		next(w, r)
+		next(writer, request)
+	}
+}
+
+func logMiddleware(next http.HandlerFunc) http.HandlerFunc {
+	return func(writer http.ResponseWriter, request *http.Request) {
+		
+		log.Print(request.RemoteAddr)
+
+		next(writer, request)
+	}
+}
+
+func tokenMiddleware(next http.HandlerFunc) http.HandlerFunc {
+	return func(writer http.ResponseWriter, request *http.Request) {
+		params := request.URL.Query()
+		token := params.Get("token")
+		if _ , err := security.CheckToken(token); err!=nil{
+			http.Error(writer, "Invalid token", http.StatusUnauthorized);
+		}
+
+		next(writer,request)
+
 	}
 }
 
