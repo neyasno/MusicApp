@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
@@ -16,10 +17,11 @@ type Users struct {
 }
 
 type UserData struct {
-	Email    string `json:"email"`
-	Password string `json:"password"`
-	Username string `json:"username"`
-	Playlists Playlists `json:"playlists"`
+	Id        primitive.ObjectID `json:"id,omitempty"`
+	Email     string             `json:"email"`
+	Password  string             `json:"password"`
+	Username  string             `json:"username"`
+	Playlists Playlists          `json:"playlists"`
 }
 
 func (db Database) Users() Users {

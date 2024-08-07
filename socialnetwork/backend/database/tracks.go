@@ -3,14 +3,16 @@ package database
 import (
 	"context"
 
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
 type TrackData struct {
-	Title    string `json:"title"`
-	Duration string `json:"duration"`
-	AuthorId string `json:"author_id"`
-	AlbumId string `json:"album_id"`
+	Id       primitive.ObjectID `json:"id,omitempty"`
+	Title    string             `json:"title"`
+	Duration string             `json:"duration"`
+	AuthorId string             `json:"author_id"`
+	AlbumId  string             `json:"album_id"`
 }
 
 type Tracks struct {
@@ -18,3 +20,9 @@ type Tracks struct {
 	ctx        context.Context
 }
 
+func (db Database) Tracks() Tracks {
+	return Tracks{
+		collection: *db.data.Collection("tracks"),
+		ctx:        db.ctx,
+	}
+}
