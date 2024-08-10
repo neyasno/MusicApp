@@ -21,7 +21,7 @@ type UserData struct {
 	Email     string             `json:"email"`
 	Password  string             `json:"password"`
 	Username  string             `json:"username"`
-	Playlists Playlists          `json:"playlists"`
+	Playlists []PlaylistData          `json:"playlists"`
 }
 
 func (db Database) Users() Users {
@@ -67,6 +67,24 @@ func (users Users) LoginUser(user UserData) (string, string) {
 	return "USER_LOGIN", token
 
 }
+
+func (users Users) GetUser(username string) UserData{
+	isExist , user := users.contains("username" , username)
+	if !isExist {
+		log.Print("user not exist")
+	}
+	return user
+}
+
+func (user *UserData) AddPlaylist (playlist PlaylistData){
+	user.Playlists = append(user.Playlists, playlist)
+}
+
+func (user UserData) GetPlaylists () []PlaylistData{
+	return user.Playlists
+}
+
+
 
 func (table Users) contains(key string, value string) (bool, UserData) {
 

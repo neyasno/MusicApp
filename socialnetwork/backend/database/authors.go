@@ -21,14 +21,14 @@ func (db Database) Authors() Authors {
 	}
 }
 
-type Author struct{
+type AuthorData struct{
 	Id primitive.ObjectID `bson:"_id,omitempty" json:"id,omitempty"`
 	Title string `bson:"title" json:"title"`
 	Description string `bson:"description" json:"description"`
 	Image string `bson:"image" json:"image"`
 }
 
-func (authors Authors) AddAuthor (author Author){
+func (authors Authors) AddAuthor (author AuthorData){
 
 	_ , err := authors.collection.InsertOne(authors.ctx , author)
 	if err!=nil {
@@ -36,7 +36,7 @@ func (authors Authors) AddAuthor (author Author){
 	}
 }
 
-func (authors Authors) GetAuthor ( id string ) Author {
+func (authors Authors) GetAuthor ( id string ) AuthorData {
 	isExist , author := authors.contains("id" , id)
 
 	if !isExist{
@@ -46,18 +46,18 @@ func (authors Authors) GetAuthor ( id string ) Author {
 	return author
 }
 
-func (author Author) ToContentBlock () ContentBlock{
+func (item AuthorData) ToContentBlock () ContentBlock{
 	return ContentBlock{
-		Id: author.Id,
-		Title: author.Title,
-		Description: author.Description,
-		Image: author.Image,
+		Id: item.Id,
+		Title: item.Title,
+		Description: "",
+		Image: item.Image,
 	}
 }
 
-func (table Authors) contains(key string, value string) (bool, Author) {
+func (table Authors) contains(key string, value string) (bool, AuthorData) {
 
-	var item Author
+	var item AuthorData
 
 	filter := bson.M{key: value}
 

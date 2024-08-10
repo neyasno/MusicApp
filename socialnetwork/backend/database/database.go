@@ -36,3 +36,7 @@ func InitDatabase(ctx context.Context) Database {
 
 	return db
 }
+
+func (db Database) GetData() *mongo.Database{
+	return &db.data
+}
