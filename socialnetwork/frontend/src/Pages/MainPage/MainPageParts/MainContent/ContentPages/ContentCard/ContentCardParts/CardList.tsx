@@ -1,17 +1,5 @@
 import Track, { ITrack } from "../../../MainContentComponents/TrackComponents/Track"
 
-const CardListHeader = ()=>{
-  return(
-    <div className="p-1 pb-2 pl-8  border-b-1 border-main_ll_black flex gap-8 text-main_l_grey">
-      <h3 className="font-bold">
-          #
-      </h3>
-      <h3 className="font-semibold">Название</h3>
-    </div> 
-  )
-}
-
-
 export default function CardList({tracks}:{ tracks : ITrack[] } ) {
   
   return (
@@ -30,5 +18,16 @@ export default function CardList({tracks}:{ tracks : ITrack[] } ) {
             ></Track>))}
         </ul>
     </div>
+  )
+}
+
+const CardListHeader = ()=>{
+  return(
+    <div className="p-1 pb-2 pl-8  border-b-1 border-main_ll_black flex gap-8 text-main_l_grey">
+      <h3 className="font-bold">
+          #
+      </h3>
+      <h3 className="font-semibold">Название</h3>
+    </div> 
   )
 }

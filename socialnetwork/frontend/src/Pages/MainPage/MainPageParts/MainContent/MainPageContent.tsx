@@ -4,7 +4,6 @@ import { EContent } from '../../MainPageTypes'
 import ContentMain from './ContentPages/ContentMain'
 import ContentCategories from './ContentPages/ContentCategories'
 import ContentSearch from './ContentPages/ContentSearch/ContentSearch'
-import ContentAuthor from './ContentPages/ContentAuthor'
 import ContentCard from './ContentPages/ContentCard/ContentCard'
 import ContentCollection from './ContentPages/ContentCollection'
 
@@ -16,9 +15,6 @@ export default function MainPageContent(props:{activeContent:EContent}) {
 
       case(EContent.MAIN):{
          return <ContentMain></ContentMain>
-      }
-      case(EContent.AUTHOR):{
-        return <ContentAuthor></ContentAuthor>
       }
       case(EContent.CARD):{
         return <ContentCard></ContentCard>

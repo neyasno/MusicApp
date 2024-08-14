@@ -15,9 +15,11 @@ const Pages = () => {
           <Route path='/search/' element={ <MainPageContent activeContent={ EContent.SEARCH_RESULTS}/>} />
           <Route path='/search/:category' element={ <MainPageContent activeContent={ EContent.SEARCH_RESULTS}/> } />
           <Route path='/search/:category/:params' element={ <MainPageContent activeContent={ EContent.SEARCH_RESULTS}/>} />
-          <Route path='/section/:id' element={ <MainPageContent activeContent={EContent.COLLECTION}/> } />
-          <Route path='/section/collection/:id' element={ <MainPageContent activeContent={EContent.COLLECTION}/> } />
-
+          <Route path='/collection/:id' element={ <MainPageContent activeContent={EContent.COLLECTION}/> } />
+          <Route path='/tracks/:id' element={ <MainPageContent activeContent={EContent.CARD}/> } />
+          <Route path='/albums/:id' element={ <MainPageContent activeContent={EContent.CARD}/> } />
+          <Route path='/authors/:id' element={ <MainPageContent activeContent={EContent.CARD}/> } />
+          <Route path='/playlists/:id' element={ <MainPageContent activeContent={EContent.CARD}/> } />
       </Route>
 
         <Route path='/login' element={

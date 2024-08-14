@@ -37,7 +37,12 @@ func (authors Authors) AddAuthor (author AuthorData){
 }
 
 func (authors Authors) GetAuthor ( id string ) AuthorData {
-	isExist , author := authors.contains("id" , id)
+	objID , err := primitive.ObjectIDFromHex(id)
+	if err!=nil{
+		log.Fatal('!')
+	}
+
+	isExist , author := authors.contains("_id" , objID)
 
 	if !isExist{
 		log.Print("not exis author")
@@ -55,7 +60,7 @@ func (item AuthorData) ToContentBlock () ContentBlock{
 	}
 }
 
-func (table Authors) contains(key string, value string) (bool, AuthorData) {
+func (table Authors) contains(key string, value interface{}) (bool, AuthorData) {
 
 	var item AuthorData
 

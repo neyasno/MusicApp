@@ -22,14 +22,14 @@ func (db Database) Tracks() Tracks {
 }
 
 type TrackData struct {
-	Id       primitive.ObjectID `json:"id,omitempty"`
+	Id       primitive.ObjectID `json:"_id,omitempty"`
 	Title    string             `json:"title"`
 	Filename string             `json:"filename"`
 	Duration string             `json:"duration"`
 	Genre    string             `json:"genre"`
 	Image string 				`json:"image"`
-	Author string               `json:"author_id"`
-	Album  string               `json:"album_id"`
+	Author string               `json:"author"`
+	Album  string               `json:"album"`
 }
 
 func (tracks Tracks) AddTrack(track TrackData){
@@ -39,8 +39,11 @@ func (tracks Tracks) AddTrack(track TrackData){
 	}	
 }
 
-func (tracks Tracks) GetTrack(title string) TrackData {
-	isExist , track := tracks.contains("title" , title)
+func (tracks Tracks) GetTrack(id string) TrackData {
+	log.Print(id)
+
+	isExist , track := tracks.contains("_id" , id)
+	log.Print(track.Author)
 	if !isExist{
 		log.Print("track not exist")
 	}
@@ -56,7 +59,7 @@ func (item TrackData) ToContentBlock () ContentBlock{
 	}
 }
 
-func (table Tracks) contains(key string, value string) (bool, TrackData) {
+func (table Tracks) contains(key string, value interface{}) (bool, TrackData) {
 
 	var item TrackData
 

@@ -1,193 +1,67 @@
-import React from 'react'
-import ItemsContainer from '../MainContentComponents/ItemComponents/ItemsContainer'
+
+import { useEffect, useState } from 'react'
+import ContentLine, { IItemServer } from '../MainContentComponents/ItemComponents/ContentLine'
 import { IItem } from '../MainContentComponents/ItemComponents/Item'
+import axios from 'axios'
+import { useLocation } from 'react-router-dom'
+
+type TContentCollection = {
+  id : string ,
+  title : string , 
+  type_of : string , 
+  items : IItemServer[]
+}
 
 export default function ContentCollection() {
 
-    let itemsData : IItem[] = [
-        {
-          title: "Ирина Кариворамира" , 
-          description : "Исполнитель" ,
-          image : "https://i.scdn.co/image/ab67616d00001e02ca7d1cfaf54216f536665f91", 
-          link : "" ,
-        },
-        {
-          title: "Ирина Кариворамира" , 
-          description : "Исполнитель" ,
-          image : "https://i.scdn.co/image/ab67616d00001e02ca7d1cfaf54216f536665f91", 
-          link : "" ,
-        },
-        {
-          title: "Ирина Кариворамира" , 
-          description : "Исполнитель" ,
-          image : "https://i.scdn.co/image/ab67616d00001e02ca7d1cfaf54216f536665f91", 
-          link : "" ,
-        },
-        {
-          title: "Ирина Кариворамира" , 
-          description : "Исполнитель" ,
-          image : "https://i.scdn.co/image/ab67616d00001e02ca7d1cfaf54216f536665f91", 
-          link : "" ,
-        },
-        {
-          title: "Ирина Кариворамира" , 
-          description : "Исполнитель" ,
-          image : "https://i.scdn.co/image/ab67616d00001e02ca7d1cfaf54216f536665f91", 
-          link : "" ,
-        },
-        {
-          title: "Ирина Кариворамира" , 
-          description : "Исполнитель" ,
-          image : "https://i.scdn.co/image/ab67616d00001e02ca7d1cfaf54216f536665f91", 
-          link : "" ,
-        },
-        {
-          title: "Ирина Кариворамира" , 
-          description : "Исполнитель" ,
-          image : "https://i.scdn.co/image/ab67616d00001e02ca7d1cfaf54216f536665f91", 
-          link : "" ,
-        },
-        {
-            title: "Ирина Кариворамира" , 
-            description : "Исполнитель" ,
-            image : "https://i.scdn.co/image/ab67616d00001e02ca7d1cfaf54216f536665f91", 
-            link : "" ,
-          },
-          {
-            title: "Ирина Кариворамира" , 
-            description : "Исполнитель" ,
-            image : "https://i.scdn.co/image/ab67616d00001e02ca7d1cfaf54216f536665f91", 
-            link : "" ,
-          },
-          {
-            title: "Ирина Кариворамира" , 
-            description : "Исполнитель" ,
-            image : "https://i.scdn.co/image/ab67616d00001e02ca7d1cfaf54216f536665f91", 
-            link : "" ,
-          },
-          {
-            title: "Ирина Кариворамира" , 
-            description : "Исполнитель" ,
-            image : "https://i.scdn.co/image/ab67616d00001e02ca7d1cfaf54216f536665f91", 
-            link : "" ,
-          },
-          {
-            title: "Ирина Кариворамира" , 
-            description : "Исполнитель" ,
-            image : "https://i.scdn.co/image/ab67616d00001e02ca7d1cfaf54216f536665f91", 
-            link : "" ,
-          },
-          {
-            title: "Ирина Кариворамира" , 
-            description : "Исполнитель" ,
-            image : "https://i.scdn.co/image/ab67616d00001e02ca7d1cfaf54216f536665f91", 
-            link : "" ,
-          },
-          {
-            title: "Ирина Кариворамира" , 
-            description : "Исполнитель" ,
-            image : "https://i.scdn.co/image/ab67616d00001e02ca7d1cfaf54216f536665f91", 
-            link : "" ,
-          },
-          {
-            title: "Ирина Кариворамира" , 
-            description : "Исполнитель" ,
-            image : "https://i.scdn.co/image/ab67616d00001e02ca7d1cfaf54216f536665f91", 
-            link : "" ,
-          },
-          {
-            title: "Ирина Кариворамира" , 
-            description : "Исполнитель" ,
-            image : "https://i.scdn.co/image/ab67616d00001e02ca7d1cfaf54216f536665f91", 
-            link : "" ,
-          },
-          {
-            title: "Ирина Кариворамира" , 
-            description : "Исполнитель" ,
-            image : "https://i.scdn.co/image/ab67616d00001e02ca7d1cfaf54216f536665f91", 
-            link : "" ,
-          },
-          {
-            title: "Ирина Кариворамира" , 
-            description : "Исполнитель" ,
-            image : "https://i.scdn.co/image/ab67616d00001e02ca7d1cfaf54216f536665f91", 
-            link : "" ,
-          },
-          {
-            title: "Ирина Кариворамира" , 
-            description : "Исполнитель" ,
-            image : "https://i.scdn.co/image/ab67616d00001e02ca7d1cfaf54216f536665f91", 
-            link : "" ,
-          },
-          {
-            title: "Ирина Кариворамира" , 
-            description : "Исполнитель" ,
-            image : "https://i.scdn.co/image/ab67616d00001e02ca7d1cfaf54216f536665f91", 
-            link : "" ,
-          },
-          {
-            title: "Ирина Кариворамира" , 
-            description : "Исполнитель" ,
-            image : "https://i.scdn.co/image/ab67616d00001e02ca7d1cfaf54216f536665f91", 
-            link : "" ,
-          },
-          {
-              title: "Ирина Кариворамира" , 
-              description : "Исполнитель" ,
-              image : "https://i.scdn.co/image/ab67616d00001e02ca7d1cfaf54216f536665f91", 
-              link : "" ,
-            },
-            {
-              title: "Ирина Кариворамира" , 
-              description : "Исполнитель" ,
-              image : "https://i.scdn.co/image/ab67616d00001e02ca7d1cfaf54216f536665f91", 
-              link : "" ,
-            },
-            {
-              title: "Ирина Кариворамира" , 
-              description : "Исполнитель" ,
-              image : "https://i.scdn.co/image/ab67616d00001e02ca7d1cfaf54216f536665f91", 
-              link : "" ,
-            },
-            {
-              title: "Ирина Кариворамира" , 
-              description : "Исполнитель" ,
-              image : "https://i.scdn.co/image/ab67616d00001e02ca7d1cfaf54216f536665f91", 
-              link : "" ,
-            },
-            
-          
-    ]
+  const [data , setDividedData] = useState<{data : IItemServer[][] , isRounded : boolean}>({data:[],isRounded:false})
+
+  const location = useLocation()
+
+  useEffect(()=>{
+
+    const url = "http://localhost:8080/api" + location.pathname
     
-    const divideData =( data : IItem[] , parts : number) =>{
+    axios.get(url).then((resp)=>{
+      let data = divideData(resp.data["items"] , 7)
+      setDividedData({
+        data : data , 
+        isRounded : resp.data["type_of"]=="AUTHORS"? true : false
+      })
+    })
 
-      let dataBlock = [];
-      let dividedData = [];
-      let dataBlockAmount = data.length/parts;
+  },[])
 
-      for(let i = 0 ; i < (dataBlockAmount) ; i++){
-          for(let j = 0 ; j < parts ; j++){
-              let clearItem = itemsData.pop(); 
-              if(clearItem){
-                  dataBlock.push( clearItem )
-              }   
-          }
-          dividedData.push(dataBlock);
-          dataBlock = [];
+  return (
+      <section>
+          <div className='p-4 pt-0'>
+              {data.data.map((item , key) =>(
+                  <ContentLine title='' id='' type='' items={item} key={key} isRounded={data.isRounded}></ContentLine>
+              ))}
+          </div>
+      </section>
+  )
+}
+
+const divideData =( data : IItemServer[] , parts : number) =>{
+
+  let dataBlock = [];
+  let dividedData = [];
+  let dataBlockAmount = data.length/parts;
+
+  for(let i = 0 ; i < (dataBlockAmount) ; i++){
+      for(let j = 0 ; j < parts ; j++){
+          let clearItem = data.pop(); 
+          if(clearItem){
+              dataBlock.push( clearItem )
+          }   
       }
-      
-      return dividedData;
-    }
+      dividedData.push(dataBlock);
+      dataBlock = [];
+  }
 
-    const dividedData = divideData(itemsData , 7) ; 
+  console.log(dividedData)
 
-    return (
-        <section>
-            <div className='p-4 pt-0'>
-                {dividedData.map((item , key) =>(
-                    <ItemsContainer title='' link='' items={item} key={key}></ItemsContainer>
-                ))}
-            </div>
-        </section>
-    )
+  
+  return dividedData;
 }

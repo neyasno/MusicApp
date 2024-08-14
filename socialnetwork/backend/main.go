@@ -21,12 +21,20 @@ func main() {
 
 	users := db.Users()
 	content := db.Content()
-
-	
+	content_lines := db.ContentLines()
+	authors := db.Authors()
+	albums := db.Albums()
+	tracks := db.Tracks()
+	playlists := db.Playlists()
 
 	http.HandleFunc("/api/login", middleware.WithMiddleware(LoginHandler(users)))
 	http.HandleFunc("/api/registration", middleware.WithMiddleware(RegistrationHandler(users)))
-	http.HandleFunc("/api/content" , middleware.WithTokenMiddleware(ContentHandler(content)))
+	http.HandleFunc("/api/content" , middleware.WithMiddleware(ContentHandler(content)))
+	http.HandleFunc("/api/collection/" , middleware.WithMiddleware(CollectionHandler(content_lines)))
+	http.HandleFunc("/api/authors/" , middleware.WithMiddleware(AuthorsHandler(authors)))
+	http.HandleFunc("/api/albums/" , middleware.WithMiddleware(AlbumsHandler(albums)))
+	http.HandleFunc("/api/playlists/" , middleware.WithMiddleware(PlaylistsHandler(playlists)))
+	http.HandleFunc("/api/tracks/" , middleware.WithMiddleware(TracksHandler(tracks)))
 
 	fmt.Println("Starting server at port 8080")
 	log.Fatal(http.ListenAndServe(":8080", nil))

@@ -22,7 +22,7 @@ func (db Database) Albums() Albums {
 }
 
 type AlbumData struct{
-	Id primitive.ObjectID `json:"id,omitempty"`
+	Id primitive.ObjectID `bson:"_id,omitempty" json:"_id,omitempty"`
 	Title    string             `json:"title"`
 	Image string 				`json:"image"`
 	Author string               `json:"author_id"`
@@ -45,15 +45,21 @@ func (albums Albums) AddAlbum(album AlbumData){
 	}
 }
 
-func (albums Albums) GetAlbum(title string) AlbumData {
-	isExist , album := albums.contains("title" , title)
+func (albums Albums) GetAlbum(id string) AlbumData {
+	
+	objID , err := primitive.ObjectIDFromHex(id)
+	if err!=nil{
+		log.Fatal('!')
+	}
+
+	isExist , album := albums.contains("_id" , objID)
 	if !isExist{
 		log.Print("ALBUM NOT EXIST")
 	}
 	return album
 }
 
-func (table Albums) contains(key string, value string) (bool, AlbumData) {
+func (table Albums) contains(key string, value interface{}) (bool, AlbumData) {
 
 	var item AlbumData
 

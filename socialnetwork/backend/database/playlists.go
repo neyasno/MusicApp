@@ -35,8 +35,14 @@ func (playlists Playlists) AddPlaylist (playlist PlaylistData) {
 	}
 }
 
-func (playlists Playlists) GetPlaylist (title string) PlaylistData{
-	isExist , playlist := playlists.contains("title" , title)
+func (playlists Playlists) GetPlaylist (id string) PlaylistData{
+
+	objID , err := primitive.ObjectIDFromHex(id)
+	if err!=nil{
+		log.Fatal('!')
+	}
+
+	isExist , playlist := playlists.contains("_id" , objID)
 	if !isExist {
 		log.Print("playlist not exist ")
 	}
@@ -52,7 +58,7 @@ func (item PlaylistData) ToContentBlock () ContentBlock{
 	}
 }
 
-func (table Playlists) contains(key string, value string) (bool, PlaylistData) {
+func (table Playlists) contains(key string, value interface{}) (bool, PlaylistData) {
 
 	var item PlaylistData
 

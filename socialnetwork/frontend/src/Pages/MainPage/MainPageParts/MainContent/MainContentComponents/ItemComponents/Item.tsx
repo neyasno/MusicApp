@@ -5,16 +5,39 @@ export interface IItem {
 
     title:string , 
     description : string ,
+    type : string
     image : string , 
-    link : string ,
-    isRounded? : boolean ,
+    id : string ,
+}   
 
-}
+export default function Item( {title , description , image , id,type}:IItem ) {
 
-export default function Item( {title , description , image , link , isRounded }:IItem ) {
+    let isRounded = type=="AUTHORS"?true:false
+    let path = ""
+
+    switch(type){
+        case "AUTHORS":{
+            path = "/authors/" + id
+            break
+        }
+        case "PLAYLISTS":{
+            path = "/playlists/" + id
+            break
+        }
+        case "TRACKS" :{
+            path = "/tracks/" + id
+            break
+        }
+        case "ALBUMS":{
+            path = "/albums/" + id
+            break
+        }
+    }
+
+
   return (
-    <li className="w-1/7    ">
-        <Link to='/section/daaaaaaaa'>
+    <li className="w-1/7">
+        <Link to={path}>
             <div className="flex flex-col p-3 hover:bg-main_l_black rounded-md group">
                 <div className="w-full relative">
                     <img className={isRounded?"rounded-full":"rounded-xl"} src={image} alt="" />

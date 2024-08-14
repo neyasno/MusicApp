@@ -23,8 +23,8 @@ func (db Database) Content() Content {
 }
 
 type ContentData struct{
-	Title string
-	Data []ContentLine
+	Title string  `bson:"title" json:"title"`
+	Items []ContentLine `bson:"items" json:"items"`
 }
 
 type ContentBlock struct{

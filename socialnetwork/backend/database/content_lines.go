@@ -36,6 +36,21 @@ func (contentLines ContentLines) GetContentLineByTitle(title string) ContentLine
 	return result
 }
 
+func (contentLines ContentLines) GetContentLineById(id string) ContentLine{
+
+	objId , err := primitive.ObjectIDFromHex(id)
+	if err!=nil {
+		log.Fatal("Error in obj parsing")
+	}
+
+	isExist , result := contentLines.contains("_id" , objId);
+	if !isExist{
+		log.Print("no such contentline exist")
+	}
+	
+	return result
+}
+
 func (contentLines ContentLines) AddContentLine( item ContentLine){
 	_ , err := contentLines.collection.InsertOne(contentLines.ctx , item)
 	if err!= nil {
@@ -43,7 +58,19 @@ func (contentLines ContentLines) AddContentLine( item ContentLine){
 	}
 }
 
-func (table ContentLines) contains(key string, value string) (bool, ContentLine) {
+func(line ContentLine) ToShort() ContentLine{
+	if len(line.Items)>=7 {
+		return ContentLine{
+			Id: line.Id,
+			Title: line.Title,
+			Type_of: line.Type_of,
+			Items: line.Items[:7],
+		}
+	}
+	return line
+}
+
+func (table ContentLines) contains(key string, value interface{}) (bool, ContentLine) {
 
 	var item ContentLine
 
