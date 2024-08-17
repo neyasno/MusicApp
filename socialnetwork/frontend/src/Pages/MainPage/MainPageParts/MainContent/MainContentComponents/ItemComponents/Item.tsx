@@ -10,9 +10,9 @@ export interface IItem {
     id : string ,
 }   
 
-export default function Item( {title , description , image , id,type}:IItem ) {
+export default function Item( {title , description , image , id , type}:IItem ) {
 
-    let isRounded = type=="AUTHORS"?true:false
+    let isRounded = (type=="AUTHORS"?true:false)
     let path = ""
 
     switch(type){

@@ -165,3 +165,17 @@ func TracksHandler(tracks database.Tracks) http.HandlerFunc {
 	json.NewEncoder(writer).Encode(track)
 	}
 }
+
+func TracksByParamsHandler(tracks database.Tracks) http.HandlerFunc {
+
+	return func(writer http.ResponseWriter, request *http.Request) {
+		 
+	params := request.URL.Query()
+
+	tracks := tracks.GetTracksByAuthor(params.Get("author")) 
+
+	log.Print(tracks)
+
+	json.NewEncoder(writer).Encode(tracks)
+	}
+}

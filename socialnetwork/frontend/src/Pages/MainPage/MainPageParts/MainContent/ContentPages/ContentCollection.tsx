@@ -1,20 +1,18 @@
 
 import { useEffect, useState } from 'react'
 import ContentLine, { IItemServer } from '../MainContentComponents/ItemComponents/ContentLine'
-import { IItem } from '../MainContentComponents/ItemComponents/Item'
 import axios from 'axios'
 import { useLocation } from 'react-router-dom'
 
 type TContentCollection = {
-  id : string ,
-  title : string , 
-  type_of : string , 
-  items : IItemServer[]
+    data : IItemServer[][] ,
+    type : string
 }
+
 
 export default function ContentCollection() {
 
-  const [data , setDividedData] = useState<{data : IItemServer[][] , isRounded : boolean}>({data:[],isRounded:false})
+  const [data , setDividedData] = useState<TContentCollection>({data:[],type:""})
 
   const location = useLocation()
 
@@ -26,7 +24,7 @@ export default function ContentCollection() {
       let data = divideData(resp.data["items"] , 7)
       setDividedData({
         data : data , 
-        isRounded : resp.data["type_of"]=="AUTHORS"? true : false
+        type : resp.data["type_of"]
       })
     })
 
@@ -36,7 +34,7 @@ export default function ContentCollection() {
       <section>
           <div className='p-4 pt-0'>
               {data.data.map((item , key) =>(
-                  <ContentLine title='' id='' type='' items={item} key={key} isRounded={data.isRounded}></ContentLine>
+                  <ContentLine title='' id='' type={data.type} items={item} key={key}></ContentLine>
               ))}
           </div>
       </section>

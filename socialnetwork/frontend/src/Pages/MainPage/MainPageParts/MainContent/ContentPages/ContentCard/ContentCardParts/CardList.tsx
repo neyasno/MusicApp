@@ -1,20 +1,25 @@
-import Track, { ITrack } from "../../../MainContentComponents/TrackComponents/Track"
+import Track from "../../../MainContentComponents/TrackComponents/Track"
+import { TTrack } from "../ContentCardWrapper"
 
-export default function CardList({tracks}:{ tracks : ITrack[] } ) {
+export default function CardList({tracks}:{ tracks : TTrack[] } ) {
   
   return (
     <div className="p-4">
         <CardListHeader></CardListHeader>
         <ul className="flex flex-col pt-3">
-          {tracks.map((item) => (<Track 
-                                          id={item.id}
-                                          name={item.name} 
+          {tracks&&tracks.map((item , key) => (<Track 
+                                          _id={item._id}
+                                          number={(key+1)+""}
+                                          title={item.title} 
                                           author={item.author} 
-                                          author_link={item.author_link}
-                                          link={item.link}
-                                          time={item.time} 
-                                          key={item.id}
-                                          img = {item.img}
+                                          key={key}
+                                          album={item.album}
+                                          duration={item.duration}
+                                          image={item.image}
+                                          genre={item.genre}
+                                          filename=""
+                                          author_id={item.author_id}
+                                          album_id=""
             ></Track>))}
         </ul>
     </div>

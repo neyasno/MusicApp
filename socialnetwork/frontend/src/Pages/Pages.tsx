@@ -5,35 +5,36 @@ import MainPage from './MainPage/MainPage'
 import { EContent } from './MainPage/MainPageTypes'
 import MainPageContent from './MainPage/MainPageParts/MainContent/MainPageContent'
 import React from 'react'
+import EPaths from '../utils/paths'
 
 const Pages = () => {
   return (
       <Routes>
         <Route path='/' element={<MainPage/>}>
-          <Route path='/' element={ <MainPageContent activeContent={EContent.MAIN}/> }/>
-          <Route path='/categories' element={ <MainPageContent activeContent={EContent.CATEGORIES}/> } />
-          <Route path='/search/' element={ <MainPageContent activeContent={ EContent.SEARCH_RESULTS}/>} />
-          <Route path='/search/:category' element={ <MainPageContent activeContent={ EContent.SEARCH_RESULTS}/> } />
-          <Route path='/search/:category/:params' element={ <MainPageContent activeContent={ EContent.SEARCH_RESULTS}/>} />
-          <Route path='/collection/:id' element={ <MainPageContent activeContent={EContent.COLLECTION}/> } />
-          <Route path='/tracks/:id' element={ <MainPageContent activeContent={EContent.CARD}/> } />
-          <Route path='/albums/:id' element={ <MainPageContent activeContent={EContent.CARD}/> } />
-          <Route path='/authors/:id' element={ <MainPageContent activeContent={EContent.CARD}/> } />
-          <Route path='/playlists/:id' element={ <MainPageContent activeContent={EContent.CARD}/> } />
+          <Route path='/'                                   element={ <MainPageContent activeContent={EContent.MAIN}/> }/>
+          <Route path={EPaths.CATEGORIES}                   element={ <MainPageContent activeContent={EContent.CATEGORIES}/> } />
+          <Route path={EPaths.SEARCH}                       element={ <MainPageContent activeContent={ EContent.SEARCH_RESULTS}/>} />
+          <Route path={EPaths.SEARCH + ":category"}         element={ <MainPageContent activeContent={ EContent.SEARCH_RESULTS}/> } />
+          <Route path={EPaths.SEARCH + ":category/:params"} element={ <MainPageContent activeContent={ EContent.SEARCH_RESULTS}/>} />
+          <Route path={EPaths.COLLECTIONS + ":id"}          element={ <MainPageContent activeContent={EContent.COLLECTION}/> } />
+          <Route path={EPaths.ALBUMS + ":id"}               element={ <MainPageContent activeContent={EContent.CARD}/> } />
+          <Route path={EPaths.AUTHORS + ":id"}              element={ <MainPageContent activeContent={EContent.CARD}/> } />
+          <Route path={EPaths.TRACKS + ":id"}               element={ <MainPageContent activeContent={EContent.CARD}/> } />
+          <Route path={EPaths.PLAYLISTS + ":id"}            element={ <MainPageContent activeContent={EContent.CARD}/> } />
       </Route>
 
-        <Route path='/login' element={
+        <Route path={EPaths.LOGIN} element={
           <VerificationPage type={EVerificationType.LOGIN}></VerificationPage>
         } />
-        <Route path='/login/reset' element={
+        <Route path={EPaths.RESET_PASSWORD} element={
           <VerificationPage type={EVerificationType.RESET_PASSWORD}></VerificationPage>
         } />
-        <Route path='/registration' element={
+        <Route path={EPaths.REGISTRATION} element={
           <VerificationPage type={EVerificationType.REGISTRATION}></VerificationPage>
         } />
 
 
-        <Route path='/info' element={
+        <Route path={EPaths.INFO} element={
           <p>Information page</p>
         } />
 

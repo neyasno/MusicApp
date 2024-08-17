@@ -25,7 +25,7 @@ type AlbumData struct{
 	Id primitive.ObjectID `bson:"_id,omitempty" json:"_id,omitempty"`
 	Title    string             `json:"title"`
 	Image string 				`json:"image"`
-	Author string               `json:"author_id"`
+	Author string               `json:"author"`
 	Items [] TrackData `json:"items"`
 }
 

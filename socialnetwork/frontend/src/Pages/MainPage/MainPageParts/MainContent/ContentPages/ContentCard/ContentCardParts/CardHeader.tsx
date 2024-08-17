@@ -4,13 +4,14 @@ type CardProps = {
     title : string , 
     type : string , 
     description : string ,
+    image : string , 
 }
 
-export default function CardHeader({title , type , description} : CardProps) {
+export default function CardHeader({title , type , description , image} : CardProps) {
   return (
     <div className={"p-5 pt-7 flex bg-gradient-to-b from-red-900 to-red-950 " + "bg-red-500"}>
         <div className="w-2/12">
-            <img src="https://i.scdn.co/image/ab67616d0000b27370ebd1b40be2fa37d043ee14" alt="" />
+            <img src={image} alt="" />
         </div>
         <div className="font-bold ml-5 mt-16">
             <p>{type}</p>

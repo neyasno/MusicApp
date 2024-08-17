@@ -6,6 +6,7 @@ import ContentCategories from './ContentPages/ContentCategories'
 import ContentSearch from './ContentPages/ContentSearch/ContentSearch'
 import ContentCard from './ContentPages/ContentCard/ContentCard'
 import ContentCollection from './ContentPages/ContentCollection'
+import ContentCardWrapper from './ContentPages/ContentCard/ContentCardWrapper'
 
 export default function MainPageContent(props:{activeContent:EContent}) {
 
@@ -17,7 +18,7 @@ export default function MainPageContent(props:{activeContent:EContent}) {
          return <ContentMain></ContentMain>
       }
       case(EContent.CARD):{
-        return <ContentCard></ContentCard>
+        return <ContentCardWrapper></ContentCardWrapper>
       }
       case(EContent.SEARCH_RESULTS):{
         return <ContentSearch></ContentSearch>

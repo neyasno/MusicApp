@@ -2,11 +2,15 @@ package database
 
 import (
 	"context"
+	"fmt"
+	"io"
 	"log"
+	"os"
 
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/mongo/gridfs"
 )
 
 type Tracks struct {
@@ -29,7 +33,9 @@ type TrackData struct {
 	Genre    string             `json:"genre"`
 	Image string 				`json:"image"`
 	Author string               `json:"author"`
+	Author_ID string            `json:"author_id"`
 	Album  string               `json:"album"`
+	Album_ID  string            `json:"album_id"`
 }
 
 func (tracks Tracks) AddTrack(track TrackData){
@@ -48,6 +54,31 @@ func (tracks Tracks) GetTrack(id string) TrackData {
 		log.Print("track not exist")
 	}
 	return track
+}
+
+func (tracks Tracks) GetTracksByAuthor(authorName string) []TrackData{
+
+	var items []TrackData
+	log.Print(authorName , " - - - " , )
+
+	cursor , err := tracks.collection.Find(tracks.ctx , bson.M{"author" : authorName})
+	if err!= nil {
+		log.Print("track with author not exist")
+		return items
+	}
+	defer cursor.Close(tracks.ctx)
+
+	for cursor.Next(tracks.ctx){
+		var track TrackData
+		if err:= cursor.Decode(&track); err!= nil {
+			log.Print("Error track decode")
+			continue
+		}
+		items = append(items, track)
+		
+	}
+
+	return items
 }
 
 func (item TrackData) ToContentBlock () ContentBlock{
@@ -73,4 +104,51 @@ func (table Tracks) contains(key string, value interface{}) (bool, TrackData) {
 	} else {
 		return false, item
 	}
+}
+
+func AddAudio(db Database ){
+	bucket , err := gridfs.NewBucket(db.GetData())
+	if err!=nil {
+		log.Fatal(err)
+	}
+
+	audiofile , err := os.Open("C:\\Users\\neyasno\\Documents\\Git\\MusicApp\\socialnetwork\\frontend\\public\\222.mp3")
+	if err!=nil {
+		log.Fatal(err)
+	}
+
+	uploadStream, err := bucket.OpenUploadStream("audiofile.mp3")
+    if err != nil {
+        log.Fatal(err)
+    }
+    defer uploadStream.Close()
+
+    fileSize, err := io.Copy(uploadStream, audiofile)
+    if err != nil {
+        log.Fatal(err)
+    }
+
+    fmt.Printf("File uploaded to GridFS with size: %d bytes\n", fileSize)
+}
+
+func GetAudio(filename string , db Database) *os.File{
+
+    bucket, err := gridfs.NewBucket(db.GetData())
+    if err != nil {
+        log.Fatal(err)
+    }
+
+    downloadStream, err := bucket.OpenDownloadStreamByName(filename)
+    if err != nil {
+        log.Fatal(err)
+    }
+    defer downloadStream.Close()
+
+    audioFile, err := os.Create("downloaded_audiofile.mp3")
+    if err != nil {
+        log.Fatal(err)
+    }
+    defer audioFile.Close()
+
+	return audioFile
 }
