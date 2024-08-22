@@ -1,0 +1,54 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+      {
+        "label": "Run Frontend",
+        "type": "shell",
+        "command": "npm run dev",
+        "options": {
+          "cwd": "${workspaceFolder}/frontend"
+        },
+        "problemMatcher": [],
+        "group": "build",
+        "detail": "Запускает сервер разработки фронтенда"
+      },
+      {
+        "label": "Run MongoDB",
+        "type": "shell",
+        "command": "mongod",
+        "options": {
+          "cwd": "${workspaceFolder}/backend"
+        },
+        "problemMatcher": [],
+        "group": "build",
+        "detail": "Запускает MongoDB"
+      },
+      {
+        "label": "Run Backend",
+        "type": "shell",
+        "command": "go run .",
+        "options": {
+          "cwd": "${workspaceFolder}/backend"
+        },
+        "problemMatcher": [],
+        "group": "build",
+        "detail": "Запускает сервер на Go"
+      },
+      {
+        "label": "Run All",
+        "dependsOn": [
+          "Run Frontend",
+          "Run MongoDB",
+          "Run Backend"
+        ],
+        "problemMatcher": [],
+        "group": {
+          "kind": "build",
+          "isDefault": true
+        },
+        "detail": "Запускает все три процесса"
+      }
+      
+    ]
+  }
+  
