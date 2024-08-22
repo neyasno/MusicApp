@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { TTrack } from "../../ContentPages/ContentCard/ContentCardWrapper";
-import EPaths from "../../../../../../utils/paths";
+import {EPaths} from "../../../../../../utils/paths";
 
 interface TrackProps extends TTrack {
   number : string

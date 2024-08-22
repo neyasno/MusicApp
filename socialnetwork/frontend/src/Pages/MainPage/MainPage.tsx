@@ -1,8 +1,6 @@
 import Player from "./MainPageParts/Player/Player"
 import MainPageMedia from "./MainPageParts/MainAside/MainPageMedia"
 import MainPageSelection from "./MainPageParts/MainAside/MainPageSelection"
-import MainPageContent from "./MainPageParts/MainContent/MainPageContent"
-import { EContent } from "./MainPageTypes"
 import { Outlet } from "react-router-dom"
 
 export default function MainPage() {
@@ -36,7 +34,7 @@ export default function MainPage() {
               <MainPageSelection></MainPageSelection>
             </div>
             <div className="mt-2 h-full">
-              <MainPageMedia></MainPageMedia>
+            <MainPageMedia></MainPageMedia>
             </div>
           </div>
           <div className=" flex-1 flex">

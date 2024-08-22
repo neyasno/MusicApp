@@ -1,12 +1,12 @@
-import TrackPortative, { ITrackPortative } from "../../../MainContent/MainContentComponents/TrackComponents/TrackPortative";
+import PlaylistPortative, { TPlaylistPortative } from "../../../MainContent/MainContentComponents/PlaylistPortative";
 
-export default function Playlists({playlists} : {playlists : ITrackPortative[]}) {
+export default function Playlists({playlists} : {playlists : TPlaylistPortative[]}) {
 
   return (
     <div className="px-4 flex flex-col">
         <ul>
-            {playlists.map((playlist , key) => (
-                <TrackPortative title={playlist.title} time={playlist.time} img={playlist.img} link={playlist.link} key={key}></TrackPortative>
+            {playlists && playlists.map((playlist , key) => (
+                <PlaylistPortative title={playlist.title}  image={playlist.image} id={playlist.id} items={playlist.items} key={key}/>
             ))}
         </ul>
     </div>

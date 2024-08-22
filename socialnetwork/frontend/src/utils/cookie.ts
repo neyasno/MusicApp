@@ -15,3 +15,12 @@ export default function getCookieValue(name :string) {
 
     return null;
 }
+
+export const setToken = (token : string) =>{
+
+    const date = new Date()
+    date.setTime(date.getTime() + (2 * 60 * 1000))
+    const expireTime = "expireTime=" + date.toUTCString() + ";"
+
+    document.cookie = "token=" + token + ";path=/;" + expireTime
+}

@@ -2,6 +2,7 @@ import { useLocation } from "react-router-dom"
 import ContentCard from "./ContentCard"
 import { useEffect, useState } from "react"
 import axios from "axios"
+import EmptyPage from "../../MainContentComponents/EmptyPage"
 
   type TAuthor = {
     _id : string , 
@@ -14,13 +15,13 @@ export  type TTrack = {
     _id : string , 
     title : string , 
     image : string , 
-    genre : string , 
+    genre? : string , 
     duration : string , 
     author : string , 
-    author_id:string , 
-    album_id: string ,
-    album : string , 
-    filename : string , 
+    author_id?:string , 
+    album_id?: string ,
+    album? : string , 
+    filename? : string , 
   }
   
   type TPlaylist = {
@@ -72,6 +73,7 @@ export default function ContentCardWrapper() {
           tracks = {tracks!}
         />
     )}
+    {!cardData && <EmptyPage/>}
     </>
   )
 }

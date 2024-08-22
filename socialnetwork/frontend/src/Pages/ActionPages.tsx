@@ -17,14 +17,14 @@ export default function ActionPages({setAction , actionPage}:{setAction : Functi
       case(EActionPages.VERIFICATION):{
         return (
           <ActionWrapper setAction={setAction} >
-            <ActionVerification></ActionVerification>
+            <ActionVerification/>
           </ActionWrapper>
         )
       }
       case(EActionPages.CREATE_PLAYLIST):{
         return (
           <ActionWrapper setAction={setAction} >
-            <ActionCreatePlaylist></ActionCreatePlaylist>
+            <ActionCreatePlaylist/>
           </ActionWrapper>
         )
       }

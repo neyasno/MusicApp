@@ -3,7 +3,7 @@ import PlayButton from "../../../../MainContentComponents/PlayButton";
 
 export default function BestResult() {
     return(
-        <div className='w-1/3 '>
+        <div className='w-1/3'>
             <h2 className='font-bold text-2xl pb-4'>Лучший результат</h2>
             <Link to={"/section/" + "dasds"}>
                 <div className='flex flex-col bg-main_d_black rounded-md p-5 hover:bg-main_l_black relative group'>

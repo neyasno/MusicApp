@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { HttpStatusCode } from 'axios';
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import RegistrationRange from '../../FormComponents/RegistrationRange';
@@ -29,18 +29,13 @@ export default function PersonStep( { step , setStep ,email , password }: Person
 
     console.log(registrationResponse)
 
-    axios.post(url , registrationResponse ).then((res) => {
-      
-      console.log(res)
-      if (res.data == "USER_CREATED"){
-        alert("Аккаунт успешно зарегистрирован")
+    axios.post(url , registrationResponse ).then(() => {
 
         navigator("/login")
-      }
-      else{
-        setError("Ошибка , пользователь cуществует")
-        
-      }
+
+    }).catch(()=>{
+
+      setError("Ошибка , пользователь cуществует")
 
     })
   }

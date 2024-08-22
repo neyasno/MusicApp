@@ -49,12 +49,14 @@ func tokenMiddleware(next http.HandlerFunc) http.HandlerFunc {
 	return func(writer http.ResponseWriter, request *http.Request) {
 		params := request.URL.Query()
 		token := params.Get("token")
-		if _ , err := security.CheckToken(token); err!=nil{
-			http.Error(writer, "Invalid token", http.StatusUnauthorized);
+		claims , err := security.CheckToken(token)
+		if err!=nil{
+			writer.WriteHeader(http.StatusUnauthorized)
+			return
 		}
+		request.Header.Add("username" , claims.Username)
 
 		next(writer,request)
-
 	}
 }
 

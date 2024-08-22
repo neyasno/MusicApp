@@ -1,9 +1,10 @@
 import { useContext, useState } from "react";
 import InputField from "../FormComponents/InputField";
 import SubmitButton from "../FormComponents/SubmitButton";
-import axios from "axios";
+import axios, { HttpStatusCode } from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { LoginStatusContext } from "../../../../App";
+import { setToken } from "../../../../utils/cookie";
 
 
 export default function LoginFormMain() {
@@ -21,16 +22,7 @@ export default function LoginFormMain() {
     func(action.target.value);
   }
 
-  const onButtonClick = (action : React.MouseEvent<Element , MouseEvent>) => {
-
-    action.preventDefault();
-
-    console.log("SEND GET RESPONSE")
-
-    loginRequest()
-  }
-
-  const loginRequest = () => {
+  const sendLoginRequest = () => {
 
     const url = "http://localhost:8080/api/login"
 
@@ -43,24 +35,22 @@ export default function LoginFormMain() {
                     }
     ).then( (resp) => { 
 
-      const answerCode = resp.data["code"]
+      setToken(resp.data["token"]);
 
-      switch(answerCode){
-        case ("USER_LOGIN"):{
+      loginContext?.setLoggedIn(true)
 
-          setToken(resp.data["token"]);
+      navigator("/")
+      
+    }).catch((reason)=>{
 
-          loginContext?.setLoggedIn(true)
-  
-          navigator("/")
-          break
+      const resp = reason.response
 
-        }
-        case ("USER_NOT_EXIST"):{
+      switch(resp.status){
+        case (HttpStatusCode.NotFound):{
           setError("Аккаунт не существует")
           break
         }
-        case ("USER_PASSWORD_FALSE"):{
+        case (HttpStatusCode.Conflict):{
           setError("Данные для входа не верны")
           break
         }
@@ -69,17 +59,7 @@ export default function LoginFormMain() {
           break
         }
       }
-      
     })
-  }
-
-  const setToken = (token : string) =>{
-
-    const date = new Date()
-    date.setTime(date.getTime() + (2 * 60 * 1000))
-    const expireTime = "expireTime=" + date.toUTCString() + ";"
-
-    document.cookie = "token=" + token + ";path=/;" + expireTime
   }
 
   return (
@@ -108,7 +88,7 @@ export default function LoginFormMain() {
                   <p className='p-2'>Запомнить меня</p>
                 </div>
 
-                <SubmitButton text="Войти" func={onButtonClick}></SubmitButton>
+                <SubmitButton text="Войти" func={()=>sendLoginRequest()}></SubmitButton>
 
                 <div className='pt-6 w-full flex justify-center items-center'>
                   <Link className='underline'  to='/login/reset'>Забыли пароль ?</Link>

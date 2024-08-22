@@ -1,48 +1,38 @@
-import { useContext } from "react";
-import { ActionContext, LoginStatusContext } from "../../../../../App";
+import { useContext, useEffect, useState } from "react";
+import { LoginStatusContext } from "../../../../../App";
 import MediaRecomendationBlock from "./UserMediaLibrary/RecomendationBlock";
 import Playlists from "./UserMediaLibrary/Playlists";
-import { ITrackPortative } from "../../MainContent/MainContentComponents/TrackComponents/TrackPortative";
+import axios from "axios";
+import { EApi } from "../../../../../utils/paths";
+import getCookieValue from "../../../../../utils/cookie";
+import { TPlaylistPortative } from "../../MainContent/MainContentComponents/PlaylistPortative";
 
-export default function MediaPlaylists({func}:{func:Function}) {
+type MediaPlaylistsProps={
+  playlists : TPlaylistPortative[] ,  
+  setPlaylists : Function , 
+  func:Function , 
+}
+
+export default function MediaPlaylists({playlists , setPlaylists , func}: MediaPlaylistsProps) {
 
   const loginContext = useContext(LoginStatusContext)
-    
-  const playlists: ITrackPortative[] = [
-    { 
-        title:"Мой плейлист",
-        img:"https://i.scdn.co/image/ab67616d00001e02ca7d1cfaf54216f536665f91" , 
-        link:"" ,
-        time : "1:20:42" ,
-    },
-    { 
-        title:"Мой плейлист",
-        img:"https://i.scdn.co/image/ab67616d00001e02ca7d1cfaf54216f536665f91" , 
-        link:"" ,
-        time : "1:20:42" ,
-    },
-    { 
-        title:"Мой плейлист",
-        img:"https://i.scdn.co/image/ab67616d00001e02ca7d1cfaf54216f536665f91" , 
-        link:"" ,
-        time : "1:20:42" ,
-    },
-    { 
-        title:"Мой плейлист",
-        img:"https://i.scdn.co/image/ab67616d00001e02ca7d1cfaf54216f536665f91" , 
-        link:"" ,
-        time : "1:20:42" ,
-    },
-  ] 
+
+  useEffect( ()=>{
+    axios.get(EApi.USER_PLAYLISTS,{params:{token: getCookieValue("token")}}).then((resp)=>{
+      if (resp.data.length){
+        setPlaylists(resp.data)
+      }
+    })
+  },[playlists])
   
   const renderPlaylists = () => {
-    if(loginContext?.isLoggedIn){
+    console.log(playlists)
+    if(loginContext?.isLoggedIn && playlists.length){
 
-      //  Запрос плейлистов 
       return <Playlists playlists={playlists}></Playlists> 
       
     }
-    else{
+    else {
       return <MediaRecomendationBlock func={func}></MediaRecomendationBlock>
     }
   }

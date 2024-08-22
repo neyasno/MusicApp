@@ -4,7 +4,6 @@ import { EContent } from '../../MainPageTypes'
 import ContentMain from './ContentPages/ContentMain'
 import ContentCategories from './ContentPages/ContentCategories'
 import ContentSearch from './ContentPages/ContentSearch/ContentSearch'
-import ContentCard from './ContentPages/ContentCard/ContentCard'
 import ContentCollection from './ContentPages/ContentCollection'
 import ContentCardWrapper from './ContentPages/ContentCard/ContentCardWrapper'
 

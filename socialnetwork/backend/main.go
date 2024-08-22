@@ -3,6 +3,7 @@ package main
 import (
 	"backend/database"
 	"backend/middleware"
+	p "backend/paths_handlers"
 	"context"
 	"fmt"
 	"log"
@@ -32,15 +33,17 @@ func initRoutes(db database.Database) *http.ServeMux{
 	tracks := db.Tracks()
 	playlists := db.Playlists()
 
-	mux.HandleFunc("/api/login", middleware.WithMiddleware(LoginHandler(users)))
-	mux.HandleFunc("/api/registration", middleware.WithMiddleware(RegistrationHandler(users)))
-	mux.HandleFunc("/api/content" , middleware.WithMiddleware(ContentHandler(content)))
-	mux.HandleFunc("/api/collection/" , middleware.WithMiddleware(CollectionHandler(content_lines)))
-	mux.HandleFunc("/api/authors/" , middleware.WithMiddleware(AuthorsHandler(authors)))
-	mux.HandleFunc("/api/albums/" , middleware.WithMiddleware(AlbumsHandler(albums)))
-	mux.HandleFunc("/api/playlists/" , middleware.WithMiddleware(PlaylistsHandler(playlists)))
-	mux.HandleFunc("/api/tracks/" , middleware.WithMiddleware(TracksHandler(tracks)))
-	mux.HandleFunc("/api/tracks" , middleware.WithMiddleware(TracksByParamsHandler(tracks)))
+	mux.HandleFunc("/api/", 		middleware.WithTokenMiddleware(p.TokenHandler()))
+	mux.HandleFunc("/api/login", 		middleware.WithMiddleware(p.LoginHandler(users)))
+	mux.HandleFunc("/api/registration", middleware.WithMiddleware(p.RegistrationHandler(users)))
+	mux.HandleFunc("/api/content" , 	middleware.WithMiddleware(p.ContentHandler(content)))
+	mux.HandleFunc("/api/collections/" ,middleware.WithMiddleware(p.CollectionHandler(content_lines)))
+	mux.HandleFunc("/api/authors/" , 	middleware.WithMiddleware(p.AuthorsHandler(authors)))
+	mux.HandleFunc("/api/albums/" , 	middleware.WithMiddleware(p.AlbumsHandler(albums)))
+	mux.HandleFunc("/api/playlists/" ,  middleware.WithMiddleware(p.PlaylistsHandler(playlists)))
+	mux.HandleFunc("/api/tracks/" , 	middleware.WithMiddleware(p.TracksHandler(tracks)))
+	mux.HandleFunc("/api/tracks" , 		middleware.WithMiddleware(p.TracksByParamsHandler(tracks)))
+	mux.HandleFunc("/api/userplaylists",middleware.WithTokenMiddleware(p.UserPlaylistsHandler(users)))
 
 	return mux
 }

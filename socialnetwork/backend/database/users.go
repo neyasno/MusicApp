@@ -4,24 +4,16 @@ import (
 	"backend/security"
 	"context"
 	"log"
+	"net/http"
 	"time"
 
 	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
 type Users struct {
 	collection mongo.Collection
 	ctx        context.Context
-}
-
-type UserData struct {
-	Id        primitive.ObjectID `bson:"_id,omitempty" json:"_id,omitempty"`
-	Email     string             `json:"email"`
-	Password  string             `json:"password"`
-	Username  string             `json:"username"`
-	Playlists []PlaylistData          `json:"playlists"`
 }
 
 func (db Database) Users() Users {
@@ -31,44 +23,45 @@ func (db Database) Users() Users {
 	}
 }
 
-func (users Users) RegisterUser(user UserData) string {
+func (users Users) RegisterUser(user UserData) int {
 
 	isUserEmailExist, _ := users.contains("email", user.Email)
 	isUserUsernameExist, _ := users.contains("username", user.Username)
 
 	if isUserEmailExist || isUserUsernameExist {
-		return "USER_ALREADY_EXIST"
+		return http.StatusConflict
 	}
 
-	result, err := users.collection.InsertOne(users.ctx, user)
+	user.Playlists = []PlaylistData{}
+
+	_, err := users.collection.InsertOne(users.ctx, user)
 	if err != nil {
 		log.Fatal(err)
+		return http.StatusInternalServerError
 	}
 
-	log.Print("user has been added with ID : ", result.InsertedID)
-	return "USER_CREATED"
+	return http.StatusCreated
 }
 
-func (users Users) LoginUser(user UserData) (string, string) {
+func (users Users) LoginUser(user UserData) (int, string) {
 
-	isUserExist, item := users.contains("email", user.Email)
+	isUserExist, result := users.contains("email", user.Email)
 
 	if !isUserExist {
-		return "USER_NOT_EXIST", ""
+		return http.StatusNotFound, ""
 	}
 
-	if item.Password != user.Password {
-		return "USER_PASSWORD_FALSE", ""
+	if result.Password != user.Password {
+		return http.StatusConflict, ""
 	}
 
 	expiresTime := time.Now().Add(20 * time.Minute)
-	token := security.GenerateToken(item.Username, expiresTime.Unix())
+	token := security.GenerateToken(result.Username, expiresTime.Unix())
 
-	return "USER_LOGIN", token
-
+	return http.StatusOK, token
 }
 
-func (users Users) GetUser(username string) UserData{
+func (users Users) GetUser(username string) *UserData{
 	isExist , user := users.contains("username" , username)
 	if !isExist {
 		log.Print("user not exist")
@@ -76,17 +69,7 @@ func (users Users) GetUser(username string) UserData{
 	return user
 }
 
-func (user *UserData) AddPlaylist (playlist PlaylistData){
-	user.Playlists = append(user.Playlists, playlist)
-}
-
-func (user UserData) GetPlaylists () []PlaylistData{
-	return user.Playlists
-}
-
-
-
-func (table Users) contains(key string, value string) (bool, UserData) {
+func (table Users) contains(key string, value string) (bool, *UserData) {
 
 	var item UserData
 
@@ -96,8 +79,8 @@ func (table Users) contains(key string, value string) (bool, UserData) {
 	findRes.Decode(&item)
 
 	if findRes.Err() == nil {
-		return true, item
+		return true, &item
 	} else {
-		return false, item
+		return false, &item
 	}
 }
