@@ -28,95 +28,93 @@ func (db Database) Tracks() Tracks {
 }
 
 type TrackData struct {
-	Id       primitive.ObjectID `json:"id,omitempty"`
-	Title    string             `json:"title"`
-	Filename string             `json:"filename"`
-	Duration string             `json:"duration"`
-	Genre    string             `json:"genre"`
-	Image string 				`json:"image"`
-	Author string               `json:"author"`
-	Author_ID string            `json:"author_id"`
-	Album  string               `json:"album"`
-	Album_ID  string            `json:"album_id"`
+	Id        primitive.ObjectID `json:"id,omitempty"`
+	Title     string             `json:"title"`
+	Filename  string             `json:"filename"`
+	Duration  string             `json:"duration"`
+	Genre     string             `json:"genre"`
+	Image     string             `json:"image"`
+	Author    string             `json:"author"`
+	Author_ID string             `json:"author_id"`
 }
 
-func (tracks Tracks) AddTrack(track TrackData){
-	_ , err := tracks.collection.InsertOne(tracks.ctx , track)
-	if err!=nil { 
+func (tracks Tracks) AddTrack(track TrackData) {
+	_, err := tracks.collection.InsertOne(tracks.ctx, track)
+	if err != nil {
 		log.Fatal(err)
-	}	
+	}
 }
 
 func (tracks Tracks) GetTrack(id string) TrackData {
 	log.Print(id)
 
-	isExist , track := tracks.contains("_id" , id)
+	isExist, track := tracks.contains("_id", id)
 	log.Print(track.Author)
-	if !isExist{
+	if !isExist {
 		log.Print("track not exist")
 	}
 	return track
 }
 
-func (tracks Tracks) GetTracksByAuthor(authorName string) []TrackData{
+func (tracks Tracks) GetTracksByAuthor(authorName string) []TrackData {
 
 	var items []TrackData
-	log.Print(authorName , " - - - " , )
+	log.Print(authorName, " - - - ")
 
-	cursor , err := tracks.collection.Find(tracks.ctx , bson.M{"author" : authorName})
-	if err!= nil {
+	cursor, err := tracks.collection.Find(tracks.ctx, bson.M{"author": authorName})
+	if err != nil {
 		log.Print("track with author not exist")
 		return items
 	}
 	defer cursor.Close(tracks.ctx)
 
-	for cursor.Next(tracks.ctx){
+	for cursor.Next(tracks.ctx) {
 		var track TrackData
-		if err:= cursor.Decode(&track); err!= nil {
+		if err := cursor.Decode(&track); err != nil {
 			log.Print("Error track decode")
 			continue
 		}
 		items = append(items, track)
-		
+
 	}
 
 	return items
 }
 
-func (tracks Tracks) GetRandomTrackByAuthor(authorName string) TrackData{
+func (tracks Tracks) GetRandomTrackByAuthor(authorName string) TrackData {
 
-	cursor , _ := tracks.collection.Find(tracks.ctx , bson.M{"author" : authorName})
-
-	defer cursor.Close(tracks.ctx)
-
-	var allTracks []TrackData
-	cursor.All(tracks.ctx , allTracks)
-
-	rand.NewSource(time.Now().UnixNano())
-
-	return allTracks[rand.Intn(len(allTracks))] 
-}
-
-func (tracks Tracks) GetRandomTrack() TrackData{
-
-	cursor , _ := tracks.collection.Find(tracks.ctx , bson.M{})
+	cursor, _ := tracks.collection.Find(tracks.ctx, bson.M{"author": authorName})
 
 	defer cursor.Close(tracks.ctx)
 
 	var allTracks []TrackData
-	cursor.All(tracks.ctx , allTracks)
+	cursor.All(tracks.ctx, &allTracks)
+
+	rand.NewSource(time.Now().UnixNano())
+	randIndex := rand.Intn(len(allTracks))
+	return allTracks[randIndex]
+}
+
+func (tracks Tracks) GetRandomTrack() TrackData {
+
+	cursor, _ := tracks.collection.Find(tracks.ctx, bson.M{})
+
+	defer cursor.Close(tracks.ctx)
+
+	var allTracks []TrackData
+	cursor.All(tracks.ctx, &allTracks)
 
 	rand.NewSource(time.Now().UnixNano())
 
-	return allTracks[rand.Intn(len(allTracks))] 
+	return allTracks[rand.Intn(len(allTracks))]
 }
 
-func (item TrackData) ToContentBlock () ContentBlock{
+func (item TrackData) ToContentBlock() ContentBlock {
 	return ContentBlock{
-		Id: item.Id,
-		Title: item.Title,
+		Id:          item.Id,
+		Title:       item.Title,
 		Description: item.Author,
-		Image: item.Image,
+		Image:       item.Image,
 	}
 }
 
@@ -136,49 +134,49 @@ func (table Tracks) contains(key string, value interface{}) (bool, TrackData) {
 	}
 }
 
-func AddAudio(db Database ){
-	bucket , err := gridfs.NewBucket(db.GetData())
-	if err!=nil {
+func AddAudio(db Database) {
+	bucket, err := gridfs.NewBucket(db.GetData())
+	if err != nil {
 		log.Fatal(err)
 	}
 
-	audiofile , err := os.Open("C:\\Users\\neyasno\\Documents\\Git\\MusicApp\\socialnetwork\\frontend\\public\\222.mp3")
-	if err!=nil {
+	audiofile, err := os.Open("C:\\Users\\neyasno\\Documents\\Git\\MusicApp\\socialnetwork\\frontend\\public\\222.mp3")
+	if err != nil {
 		log.Fatal(err)
 	}
 
 	uploadStream, err := bucket.OpenUploadStream("audiofile.mp3")
-    if err != nil {
-        log.Fatal(err)
-    }
-    defer uploadStream.Close()
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer uploadStream.Close()
 
-    fileSize, err := io.Copy(uploadStream, audiofile)
-    if err != nil {
-        log.Fatal(err)
-    }
+	fileSize, err := io.Copy(uploadStream, audiofile)
+	if err != nil {
+		log.Fatal(err)
+	}
 
-    fmt.Printf("File uploaded to GridFS with size: %d bytes\n", fileSize)
+	fmt.Printf("File uploaded to GridFS with size: %d bytes\n", fileSize)
 }
 
-func GetAudio(filename string , db Database) *os.File{
+func GetAudio(filename string, db Database) *os.File {
 
-    bucket, err := gridfs.NewBucket(db.GetData())
-    if err != nil {
-        log.Fatal(err)
-    }
+	bucket, err := gridfs.NewBucket(db.GetData())
+	if err != nil {
+		log.Fatal(err)
+	}
 
-    downloadStream, err := bucket.OpenDownloadStreamByName(filename)
-    if err != nil {
-        log.Fatal(err)
-    }
-    defer downloadStream.Close()
+	downloadStream, err := bucket.OpenDownloadStreamByName(filename)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer downloadStream.Close()
 
-    audioFile, err := os.Create("downloaded_audiofile.mp3")
-    if err != nil {
-        log.Fatal(err)
-    }
-    defer audioFile.Close()
+	audioFile, err := os.Create("downloaded_audiofile.mp3")
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer audioFile.Close()
 
 	return audioFile
 }
