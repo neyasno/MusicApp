@@ -3,6 +3,8 @@ package database
 import (
 	"context"
 	"log"
+	"math/rand"
+	"time"
 
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -24,7 +26,6 @@ func (db Database) Authors() Authors {
 type AuthorData struct{
 	Id primitive.ObjectID `bson:"_id,omitempty" json:"id,omitempty"`
 	Title string `bson:"title" json:"title"`
-	Description string `bson:"description" json:"description"`
 	Image string `bson:"image" json:"image"`
 }
 
@@ -49,6 +50,34 @@ func (authors Authors) GetAuthor ( id string ) AuthorData {
 	}
 
 	return author
+}
+
+func (authors Authors) GetRandomAuthor () AuthorData {
+	var author AuthorData
+
+	cursor, err := authors.collection.Find(authors.ctx, bson.M{})
+    if err != nil {
+        log.Printf("Failed to find authors: %v", err)
+        return author
+    }
+    defer cursor.Close(authors.ctx)
+
+    var authorsList []AuthorData
+    if err = cursor.All(authors.ctx, &authorsList); err != nil {
+        log.Printf("Failed to decode authors: %v", err)
+        return author
+    }
+
+    if len(authorsList) == 0 {
+        log.Print("No authors found")
+        return author
+    }
+
+    rand.NewSource(time.Now().UnixNano())
+    randomIndex := rand.Intn(len(authorsList))
+    author = authorsList[randomIndex]
+
+    return author
 }
 
 func (item AuthorData) ToContentBlock () ContentBlock{

@@ -3,6 +3,8 @@ package database
 import (
 	"context"
 	"log"
+	"math/rand"
+	"time"
 
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -47,6 +49,19 @@ func (playlists Playlists) GetPlaylist (id string) PlaylistData{
 		log.Print("playlist not exist ")
 	}
 	return playlist
+}
+
+func (playlists Playlists) GetRandomPlaylist () PlaylistData{
+
+	cursor , _ := playlists.collection.Find(playlists.ctx , bson.M{})
+
+	var allPlaylist []PlaylistData
+
+	cursor.All(playlists.ctx , allPlaylist)
+
+	rand.NewSource(time.Now().UnixNano())
+
+	return allPlaylist[rand.Intn(len(allPlaylist))]
 }
 
 func (item PlaylistData) ToContentBlock () ContentBlock{

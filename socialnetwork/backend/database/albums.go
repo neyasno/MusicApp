@@ -3,6 +3,8 @@ package database
 import (
 	"context"
 	"log"
+	"math/rand"
+	"time"
 
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -22,10 +24,11 @@ func (db Database) Albums() Albums {
 }
 
 type AlbumData struct{
-	Id primitive.ObjectID `bson:"_id,omitempty" json:"_id,omitempty"`
+	Id primitive.ObjectID `bson:"_id,omitempty" json:"id,omitempty"`
 	Title    string             `json:"title"`
 	Image string 				`json:"image"`
 	Author string               `json:"author"`
+	AuthorId string				`bson:"author_id" json:"author_id"`
 	Items [] TrackData `json:"items"`
 }
 
@@ -57,6 +60,25 @@ func (albums Albums) GetAlbum(id string) AlbumData {
 		log.Print("ALBUM NOT EXIST")
 	}
 	return album
+}
+
+func (albums Albums) GetRandomAlbum() AlbumData {
+	
+	cursor , err := albums.collection.Find(albums.ctx , bson.M{})
+	if err!=nil{
+		log.Fatal("Err:Albums-rand")
+	}
+	defer cursor.Close(albums.ctx)
+	
+	var albumList []AlbumData
+
+	if err := cursor.All(albums.ctx , &albumList); err!=nil{
+		log.Fatal("Err : cursor")
+	}
+
+	rand.NewSource(time.Now().UnixNano())
+
+	return albumList[rand.Intn(len(albumList))]
 }
 
 func (table Albums) contains(key string, value interface{}) (bool, AlbumData) {

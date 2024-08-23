@@ -5,7 +5,9 @@ import (
 	"fmt"
 	"io"
 	"log"
+	"math/rand"
 	"os"
+	"time"
 
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -26,7 +28,7 @@ func (db Database) Tracks() Tracks {
 }
 
 type TrackData struct {
-	Id       primitive.ObjectID `json:"_id,omitempty"`
+	Id       primitive.ObjectID `json:"id,omitempty"`
 	Title    string             `json:"title"`
 	Filename string             `json:"filename"`
 	Duration string             `json:"duration"`
@@ -79,6 +81,34 @@ func (tracks Tracks) GetTracksByAuthor(authorName string) []TrackData{
 	}
 
 	return items
+}
+
+func (tracks Tracks) GetRandomTrackByAuthor(authorName string) TrackData{
+
+	cursor , _ := tracks.collection.Find(tracks.ctx , bson.M{"author" : authorName})
+
+	defer cursor.Close(tracks.ctx)
+
+	var allTracks []TrackData
+	cursor.All(tracks.ctx , allTracks)
+
+	rand.NewSource(time.Now().UnixNano())
+
+	return allTracks[rand.Intn(len(allTracks))] 
+}
+
+func (tracks Tracks) GetRandomTrack() TrackData{
+
+	cursor , _ := tracks.collection.Find(tracks.ctx , bson.M{})
+
+	defer cursor.Close(tracks.ctx)
+
+	var allTracks []TrackData
+	cursor.All(tracks.ctx , allTracks)
+
+	rand.NewSource(time.Now().UnixNano())
+
+	return allTracks[rand.Intn(len(allTracks))] 
 }
 
 func (item TrackData) ToContentBlock () ContentBlock{
