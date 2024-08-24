@@ -1,5 +1,4 @@
-import { useEffect, useState } from "react";
-import CardAddition from "./ContentCardParts/CardAddition";
+
 import CardHeader from "./ContentCardParts/CardHeader";
 import CardList from "./ContentCardParts/CardList";
 import CardPlayer from "./ContentCardParts/CardPlayer";
@@ -14,7 +13,7 @@ type TCard ={
   tracks : TTrack[]
 }
 
-export default function ContentCard({id , title , image , description , type , tracks} : TCard) {
+export default function ContentCard({ title , image , description , type , tracks} : TCard) {
 
   return (
     <section>
@@ -22,7 +21,6 @@ export default function ContentCard({id , title , image , description , type , t
         <CardHeader title={title} description={description} type={type} image={image}></CardHeader>
         <CardPlayer></CardPlayer>
         <CardList tracks={tracks}></CardList>
-        <CardAddition></CardAddition> 
       </div>
     </section>
   )

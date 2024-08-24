@@ -96,7 +96,6 @@ func TracksHandler(tracks database.Tracks) http.HandlerFunc {
 		}
 
 		trackID := segments[3]
-
 		track := tracks.GetTrack(trackID)
 
 		json.NewEncoder(writer).Encode(track)

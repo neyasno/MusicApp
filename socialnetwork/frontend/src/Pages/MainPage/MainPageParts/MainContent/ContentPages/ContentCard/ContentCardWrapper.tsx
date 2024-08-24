@@ -3,38 +3,37 @@ import ContentCard from "./ContentCard"
 import { useEffect, useState } from "react"
 import axios from "axios"
 import EmptyPage from "../../MainContentComponents/EmptyPage"
+import { EApi } from "../../../../../../utils/paths"
 
   type TAuthor = {
-    _id : string , 
+    id : string , 
     image : string , 
     title : string , 
-    description : string , 
   }
   
 export  type TTrack = {
-    _id : string , 
+    id : string , 
     title : string , 
     image : string , 
     genre? : string , 
     duration : string , 
     author : string , 
     author_id?:string , 
-    album_id?: string ,
-    album? : string , 
     filename? : string , 
   }
   
   type TPlaylist = {
-    _id:string , 
+    id:string , 
     title : string ,
     image : string ,
     items : TTrack[] ,
   }
   
   type TAlbum = {
-    _id : string , 
+    id : string , 
     title : string , 
     author:string ,
+    author_id:string ,
     image : string , 
     items : TTrack[] ,
   }
@@ -45,27 +44,25 @@ export default function ContentCardWrapper() {
     const [description , setDescription] = useState("")
     const [tracks , setTracks] = useState<TTrack[] | undefined>()
  
-    const location = useLocation()
-    const url = "http://localhost:8080/api" + location.pathname
-  
-    let cardType = getCardTypeByPath(location.pathname)
+    const location = useLocation().pathname.replace('/',"")
+    const url = EApi.DEFAULT + location
+    let cardType = getCardTypeByPath(location)
 
 
     useEffect(()=>{
 
         axios.get(url).then((resp)=>{
-          console.log(resp.data)
             setDescription(getDescription(resp.data , cardType))
             setCardData(resp.data)
             getTracks(resp.data, cardType).then( (tracks) => setTracks(tracks));
         })
 
-    } , [])
+    } , [location])
   return (
     <>
     {cardData && (
         <ContentCard 
-          id={cardData._id} 
+          id={cardData.id} 
           title={cardData.title} 
           image={cardData.image} 
           type={cardType} 
@@ -79,10 +76,8 @@ export default function ContentCardWrapper() {
 }
 
 const getCardTypeByPath = (path : string)=>{
-
-    const pathParts = path.split("/")
-  
-    switch(pathParts[1]){
+  const pathType = path.split("/")[0] 
+    switch(pathType){
       case "authors":{
         return "Автор"
       }
@@ -104,8 +99,7 @@ const getCardTypeByPath = (path : string)=>{
 const getDescription = (data : TAlbum | TAuthor | TPlaylist| TTrack | undefined , type : string) =>{
     switch(type){
         case "Автор":{
-            let author = data as TAuthor
-            return author.description
+            return ""
           }
           case "Плейлист":{
             const playlist = data as TPlaylist
@@ -117,7 +111,7 @@ const getDescription = (data : TAlbum | TAuthor | TPlaylist| TTrack | undefined 
           }
           case "Трек":{
             const track = data as TTrack
-            return track.author + "  " + track.album + "  " + track.genre  + "  " + track.duration 
+            return track.author + "  " + track.genre  + "  " + track.duration 
           }
           default:{
             return ""
@@ -129,9 +123,8 @@ const getTracks = async (data : TAlbum | TAuthor | TPlaylist| TTrack | undefined
     switch(type){
         case "Автор":{
             let author = data as TAuthor
-            const url = "http://localhost:8080/api/tracks"
+            const url = EApi.TRACKS
             const response = await axios.get(url , {params:{ author : author.title }});
-            console.log(response.data)
             return response.data as TTrack[];
           }
           case "Плейлист":{

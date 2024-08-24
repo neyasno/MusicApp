@@ -6,7 +6,7 @@ interface TrackProps extends TTrack {
   number : string
 }
 
-export default function Track ( {_id , title , image , author ,duration , author_id , number}: TrackProps) {
+export default function Track ( {id , title , image , author ,duration , author_id , number}: TrackProps) {
   return (
     <li>
       <div className="flex p-2 py-1 items-center justify-between font-bold text-main_l_grey group hover:bg-main_l_black rounded-md">
@@ -23,7 +23,7 @@ export default function Track ( {_id , title , image , author ,duration , author
             <img className="rounded-md" src={image} alt="" />
           </div>
           <div className="flex flex-col justify-center pl-3">
-            <Link to={EPaths.TRACKS +_id}>
+            <Link to={EPaths.TRACKS +id}>
               <p className="text-main_WHITE text-lg hover:underline">
                 { title}
               </p>

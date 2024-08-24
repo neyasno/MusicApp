@@ -28,14 +28,14 @@ func (db Database) Tracks() Tracks {
 }
 
 type TrackData struct {
-	Id        primitive.ObjectID `json:"id,omitempty"`
+	Id        primitive.ObjectID `bson:"_id,omitempty" json:"id,omitempty"`
 	Title     string             `json:"title"`
 	Filename  string             `json:"filename"`
 	Duration  string             `json:"duration"`
 	Genre     string             `json:"genre"`
 	Image     string             `json:"image"`
 	Author    string             `json:"author"`
-	Author_ID string             `json:"author_id"`
+	Author_ID string             `bson:"author_id" json:"author_id"`
 }
 
 func (tracks Tracks) AddTrack(track TrackData) {
@@ -46,9 +46,13 @@ func (tracks Tracks) AddTrack(track TrackData) {
 }
 
 func (tracks Tracks) GetTrack(id string) TrackData {
-	log.Print(id)
+	
+	objID, err := primitive.ObjectIDFromHex(id)
+	if err != nil {
+		log.Fatal('!')
+	}
 
-	isExist, track := tracks.contains("_id", id)
+	isExist, track := tracks.contains("_id", objID)
 	log.Print(track.Author)
 	if !isExist {
 		log.Print("track not exist")

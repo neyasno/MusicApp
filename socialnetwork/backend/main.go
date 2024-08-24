@@ -37,11 +37,11 @@ func initRoutes(db database.Database) *http.ServeMux {
 	tracks := db.Tracks()
 	playlists := db.Playlists()
 
-	CreateAuthorsDatabase(db)
-	CreateTracksDatabase(db)
-	CreateAlbumsDatabase(db)
-	CreatePlaylistsDatabase(db)
-	CreateContentLines(db)
+	// CreateAuthorsDatabase(db)
+	// CreateTracksDatabase(db)
+	// CreateAlbumsDatabase(db)
+	// CreatePlaylistsDatabase(db)
+	// CreateContentLines(db)
 
 	mux.HandleFunc("/api/", middleware.WithTokenMiddleware(p.TokenHandler()))
 	mux.HandleFunc("/api/login", middleware.WithMiddleware(p.LoginHandler(users)))
