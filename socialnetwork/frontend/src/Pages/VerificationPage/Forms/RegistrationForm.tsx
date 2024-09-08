@@ -1,13 +1,14 @@
 import FormHeader from './FormElements/FormHeader'
 import FormFooter from './FormElements/FormFooter'
 import RegistrationFormMain from './FormElements/RegistrationFormMain';
+import { EPaths } from '../../../utils/paths';
 
 export default function RegistrationForm( ) {
   
   let header_text:string = "Регистрация";
   let footer_text:string = "Есть аккаунт?";
   let link_text:string = "Вход";
-  let link:string = "/login";
+  let link:string = EPaths.LOGIN; 
 
   return (
     <div className='w-8/12 flex flex-col items-center '>

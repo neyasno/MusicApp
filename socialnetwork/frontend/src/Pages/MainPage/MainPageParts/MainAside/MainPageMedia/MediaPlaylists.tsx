@@ -7,7 +7,7 @@ import { EApi } from "../../../../../utils/paths";
 import getCookieValue from "../../../../../utils/cookie";
 import { TPlaylistPortative } from "../../MainContent/MainContentComponents/PlaylistPortative";
 
-type MediaPlaylistsProps={
+export type MediaPlaylistsProps={
   playlists : TPlaylistPortative[] ,  
   setPlaylists : Function , 
   func:Function , 
@@ -23,17 +23,16 @@ export default function MediaPlaylists({playlists , setPlaylists , func}: MediaP
         setPlaylists(resp.data)
       }
     })
-  },[playlists])
+  },[])
   
   const renderPlaylists = () => {
-    console.log(playlists)
     if(loginContext?.isLoggedIn && playlists.length){
 
       return <Playlists playlists={playlists}></Playlists> 
       
     }
     else {
-      return <MediaRecomendationBlock func={func}></MediaRecomendationBlock>
+      return <MediaRecomendationBlock playlists={playlists} func={func}></MediaRecomendationBlock>
     }
   }
 

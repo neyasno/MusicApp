@@ -29,7 +29,7 @@ export default function MainPage() {
   <div className="bg-main_BLACK h-full p-2">
     <div className="flex flex-col h-full">
       <div className="flex h-full mb-2 max-h-11/12">
-          <div className="w-2/12 mr-2 flex flex-col bg-red-500">
+          <div className="w-2/12 mr-2 flex flex-col">
             <div className="">
               <MainPageSelection></MainPageSelection>
             </div>

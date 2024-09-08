@@ -1,8 +1,9 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { ActionContext } from "../../../../../../App";
+import { TPlaylistPortative } from "../../../MainContent/MainContentComponents/PlaylistPortative";
 
-export default function MediaRecomendationBlock({func}:{func:Function}){
-
+export default function MediaRecomendationBlock({func , playlists}:{func:Function , playlists : TPlaylistPortative[]}){
+    console.log(playlists)
     const setActionVisability = useContext(ActionContext);
   
     return(
@@ -11,7 +12,7 @@ export default function MediaRecomendationBlock({func}:{func:Function}){
               <p className="mt-2">Это совссем не сложно! Мы поможем.</p>
               <button className="bg-main_WHITE text-main_BLACK rounded-full py-2 px-4 mt-5 border-1 border-main_WHITE
                  hover:bg-main_l_black hover:text-main_WHITE hover:border-1 hover:border-main_WHITE"
-                 onClick={(action)=>{ func(action , setActionVisability) }}>Создать плейлист</button>
+                 onClick={(action)=>{ func(action , setActionVisability) ;}}>Создать плейлист</button>
         </div>
     )
 }

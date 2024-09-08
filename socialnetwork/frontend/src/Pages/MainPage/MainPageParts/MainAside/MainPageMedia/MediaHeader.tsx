@@ -1,7 +1,7 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { ActionContext } from "../../../../../App";
 
-export default function MediaHeader({func , setPlaylists}:{func:Function , setPlaylists : Function}) {
+export default function MediaHeader({func}: {func : Function}) {
 
   const setAction = useContext(ActionContext);
 

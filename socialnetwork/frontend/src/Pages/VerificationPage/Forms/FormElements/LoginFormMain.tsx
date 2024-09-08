@@ -9,11 +9,11 @@ import { setToken } from "../../../../utils/cookie";
 
 export default function LoginFormMain() {
 
+  const loginContext = useContext(LoginStatusContext);
+
   const [email , setEmail] = useState("");
   const [password , setPassword] = useState("");
   const [submitError , setError] = useState("");
-
-  const loginContext = useContext(LoginStatusContext);
 
   const navigator = useNavigate()
 
@@ -38,6 +38,7 @@ export default function LoginFormMain() {
       setToken(resp.data["token"]);
 
       loginContext?.setLoggedIn(true)
+
 
       navigator("/")
       
@@ -84,7 +85,7 @@ export default function LoginFormMain() {
                 <div className="text-main_red">{submitError}</div>
                 
                 <div className='flex py-3 items-center'>
-                  <input className='size-5 bg-main_black border-1 border-main_grey outline-none checked:bg-red-500' type='checkbox'></input>
+                  <input className='size-5 bg-main_black border-1 border-main_grey outline-none ' type='checkbox'></input>
                   <p className='p-2'>Запомнить меня</p>
                 </div>
 

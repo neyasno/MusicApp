@@ -15,13 +15,12 @@ export default function MainPageMedia() {
 
   return (
     <div className="flex flex-col p-2 rounded-lg bg-main_black text-main_l_grey font-bold w-full h-full">
-        <MediaHeader  setPlaylists={setPlaylists} 
-                      func={isLoggedIn? openPlaylistCreateWindow : openRegistrationWindow} />
+        <MediaHeader func={isLoggedIn? openPlaylistCreateWindow : openRegistrationWindow}/>
         <MediaPlaylists playlists={playlists} 
                         setPlaylists={setPlaylists}
                         func={isLoggedIn? openPlaylistCreateWindow : openRegistrationWindow} />
-        <MediaNavigation ></MediaNavigation>
-        <MediaLanguage></MediaLanguage>
+        <MediaNavigation/>
+        <MediaLanguage/>
     </div>
   )
 }

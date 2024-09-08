@@ -1,11 +1,16 @@
 import axios, { HttpStatusCode } from 'axios';
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import RegistrationRange from '../../FormComponents/RegistrationRange';
+import { EApi, EPaths } from '../../../../../utils/paths';
+import { ActionContext } from '../../../../../App';
+import { EActionPages } from '../../../../ActionPageTypes';
 
 type PersonStepProps = {step : number , setStep:Function , email:string , password:string }
 
 export default function PersonStep( { step , setStep ,email , password }: PersonStepProps) {
+
+  const setAction = useContext(ActionContext)
 
   const [username , setUsername] = useState('');
   const [err , setError] = useState('');
@@ -19,7 +24,7 @@ export default function PersonStep( { step , setStep ,email , password }: Person
   function onRegistrationSubmit(action : React.MouseEvent<HTMLButtonElement, MouseEvent>){
     action.preventDefault();
 
-    const url = "http://localhost:8080/api/registration"
+    const url = EApi.REGISTRATION
 
     const registrationResponse ={
       email , 
@@ -27,11 +32,10 @@ export default function PersonStep( { step , setStep ,email , password }: Person
       username , 
     }
 
-    console.log(registrationResponse)
-
     axios.post(url , registrationResponse ).then(() => {
 
-        navigator("/login")
+      setAction(EActionPages.REGISTRATION_SURESUFULL)
+      navigator(EPaths.LOGIN)
 
     }).catch(()=>{
 
