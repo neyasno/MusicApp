@@ -20,7 +20,6 @@ export default function MainPageMedia() {
                         setPlaylists={setPlaylists}
                         func={isLoggedIn? openPlaylistCreateWindow : openRegistrationWindow} />
         <MediaNavigation/>
-        <MediaLanguage/>
     </div>
   )
 }

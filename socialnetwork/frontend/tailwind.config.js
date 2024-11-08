@@ -11,20 +11,35 @@ export default {
       colors:{
         action_shadow: "rgba(0, 0, 0, 0.8);" ,
 
-        main_green: "rgb(22 , 163 , 74)",
-        main_l_green: "rgb(42 , 183 , 94)",
-        main_grey: "rgb(107 ,114 ,128)" ,
-        main_l_grey:"rgb(180 ,180 ,180)",
+        // main_green: "rgb(22 , 163 , 74)", 
+        // main_l_green: "rgb(42 , 183 , 94)", 
+        // main_grey: "rgb(107 ,114 ,128)" ,   
+        // main_l_grey:"rgb(180 ,180 ,180)",   
+        // main_red:"rgb(185, 28 ,28)" ,
+        
+        // main_BLACK: "rgb(0,0,0)",
+        // main_WHITE: "rgb(255,255,255)" ,
+        
+        // main_black: "rgb(18,18,18)",
+        // main_d_black:"rgb(25,25,25)" ,
+        // main_dd_black:"rgb(10,10,10)",
+        // main_l_black:"rgb(40,40,40)" ,
+        // main_ll_black:"rgb(55,55,55)" ,
+
+        main_green: "rgb(100 , 200 , 200)", 
+        main_l_green: "rgb(125 , 225 , 225)", 
+        main_grey: "rgb(140 ,155 ,170)" ,   
+        main_l_grey:"rgb(60 ,60 ,60)",   
         main_red:"rgb(185, 28 ,28)" ,
         
-        main_BLACK: "rgb(0,0,0)",
-        main_WHITE: "rgb(255,255,255)" ,
+        main_BLACK: "rgb(255,255,255)",
+        main_WHITE: "rgb(0,0,0)" ,
         
-        main_black: "rgb(18,18,18)",
-        main_d_black:"rgb(25,25,25)" ,
-        main_dd_black:"rgb(10,10,10)",
-        main_l_black:"rgb(40,40,40)" ,
-        main_ll_black:"rgb(55,55,55)" ,
+        main_black: "rgb(220,220,220)",
+        main_d_black:"rgb(235,235,235)" ,
+        main_dd_black:"rgb(240,240,240)",
+        main_l_black:"rgb(200,200,200)" ,
+        main_ll_black:"rgb(180,180,180)" ,
 
       },
       borderWidth:{

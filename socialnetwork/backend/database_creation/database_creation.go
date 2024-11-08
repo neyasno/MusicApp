@@ -112,7 +112,7 @@ func CreateTracksDatabase(db database.Database) {
 			Filename:  filenames[rand.Intn(len(filenames))],
 			Duration:  durations[rand.Intn(len(durations))],
 			Genre:     genres[rand.Intn(len(genres))],
-			Image:     "https://picsum.photos/300",
+			Image:     "",
 			Author:    author.Title,
 			Author_ID: author.Id.Hex(),
 		}
@@ -238,7 +238,7 @@ func CreateAuthorsDatabase(db database.Database) {
 		author := database.AuthorData{
 			Id:    primitive.NewObjectID(),
 			Title: artists[rand.Intn(len(artists))],
-			Image: "https://picsum.photos/300",
+			Image: "",
 		}
 
 		authors.AddAuthor(author)
@@ -374,7 +374,7 @@ func CreateAlbumsDatabase(db database.Database) {
 		album := database.AlbumData{
 			Id:       primitive.NewObjectID(),
 			Title:    albumNames[rand.Intn(len(albumNames))],
-			Image:    "https://picsum.photos/300",
+			Image:    "",
 			Author:   author.Title,
 			AuthorId: author.Id.Hex(),
 			Items:    tracksArray,
@@ -513,7 +513,7 @@ func CreatePlaylistsDatabase(db database.Database) {
 		playlist := database.PlaylistData{
 			Id:    primitive.NewObjectID(),
 			Title: playlistNames[rand.Intn(len(playlistNames))],
-			Image: "https://picsum.photos/300",
+			Image: "",
 			Items: tracksArray,
 		}
 

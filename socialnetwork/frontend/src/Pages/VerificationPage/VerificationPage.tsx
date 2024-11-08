@@ -33,7 +33,7 @@ const VerificationPage :React.FC<VerificationPageProps> = ({type}) =>{
             </div>
         </main>
         <footer className='bg-main_black text-main_l_grey flex w-full aligh-center justify-center p-5 text-sm '>
-            Сайт защищен системой reCAPTCHA. Применяются Политика конфиденциальности и Условия обслуживания Google
+        @2024 Сделано в образовательных целях 
         </footer>
     </div>
   )
