@@ -5,27 +5,6 @@ import { Outlet } from "react-router-dom"
 
 export default function MainPage() {
   return (
-  //   <div className="bg-main_BLACK h-full p-2">
-  //   <div className="h-full grid grid-cols-16 grid-rows-16 gap-2">
-  //       <div className="col-span-3 row-span-14">
-  //         <div className="h-full flex flex-col">
-  //           <div className="">
-  //             <MainPageSelection></MainPageSelection>
-  //           </div>
-  //           <div className="h-full mt-2">
-  //             <MainPageMedia></MainPageMedia>
-  //           </div>
-  //         </div>
-  //       </div>
-  //       <div className="col-span-13 row-span-14">
-  //         <Outlet></Outlet>
-  //       </div>
-  //       <div className="col-span-full row-span-2">
-  //         <Player></Player> 
-  //       </div>
-  //   </div>
-  // </div>
-
   <div className="bg-main_BLACK h-full p-2">
     <div className="flex flex-col h-full">
       <div className="flex h-full mb-2 max-h-11/12">

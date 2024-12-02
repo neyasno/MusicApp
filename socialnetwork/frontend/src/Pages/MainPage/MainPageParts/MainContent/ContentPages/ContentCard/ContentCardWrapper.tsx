@@ -46,8 +46,7 @@ export default function ContentCardWrapper() {
  
     const location = useLocation().pathname.replace('/',"")
     const url = EApi.DEFAULT + location
-    let cardType = getCardTypeByPath(location)
-
+    const cardType = getCardTypeByPath(location)
 
     useEffect(()=>{
 
@@ -122,7 +121,7 @@ const getDescription = (data : TAlbum | TAuthor | TPlaylist| TTrack | undefined 
 const getTracks = async (data : TAlbum | TAuthor | TPlaylist| TTrack | undefined , type : string) => {
     switch(type){
         case "Автор":{
-            let author = data as TAuthor
+            const author = data as TAuthor
             const url = EApi.TRACKS
             const response = await axios.get(url , {params:{ author : author.title }});
             return response.data as TTrack[];

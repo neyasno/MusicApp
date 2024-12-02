@@ -9,7 +9,7 @@ type CardProps = {
 
 export default function CardHeader({title , type , description , image} : CardProps) {
   return (
-    <div className={"p-5 pt-7 flex bg-gradient-to-b from-red-900 to-red-950 " + "bg-red-500"}>
+    <div className={"p-5 pt-7 flex bg-gradient-to-b from-main_green to-main_BLACK " + "bg-red-500"}>
         <div className="w-2/12">
             <img src={image} alt="" />
         </div>
