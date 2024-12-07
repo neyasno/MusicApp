@@ -8,7 +8,7 @@ export default function ActionVerification() {
   const navigator = useNavigate()
 
   return (
-    <div className='flex justify-center items-center p-20'>
+    <div className='flex justify-center items-center w-auto '>
         <div className='flex flex-col items-center justify-center w-1/2'>
             <FormHeader text='Зарегистрируйтесь , и наслаждайтесь любой музыкой!'></FormHeader>
             <SubmitButton func={()=>{navigator(EPaths.REGISTRATION)}} text='Зарегистрироваться'></SubmitButton>
